@@ -1,2 +1,17 @@
-# CommSciMtg_Nov23
-Materials and Resources for the Community Science Meeting of November 2023
+# FTICR MS
+
+## Know Before You Go
+
+## Prerequistes
+
+## Data Access
+
+## Workshop Session
+
+### Learning Objective
+
+### Before The Day
+
+### On The Day
+
+### After The Day 
