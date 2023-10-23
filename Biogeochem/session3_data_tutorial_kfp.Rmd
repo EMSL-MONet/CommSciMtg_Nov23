@@ -1,0 +1,333 @@
+---
+title: "Session 3: Data Tutorial"
+output: html_document
+date: "2023-10-23"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+## Setup
+
+```{r}
+library(tidyverse)
+library(maptools); library(sf) # for biomes
+library(ggthemes) # for theme_map
+
+
+bgc_data = read_csv("Biogeochem/data/bgc_data.csv")
+metadata = read_csv("Biogeochem/data/bgc_metadata.csv")
+bgc_analyses = read_csv("Biogeochem/data/bgc_analyses.csv") %>% dplyr::select(column, abbreviated, analysis_type)
+```
+
+
+```{r}
+data_long = 
+  bgc_data %>% 
+  pivot_longer(cols = -c(Site_Code, Location), names_to = "column") %>% 
+  left_join(bgc_analyses) %>% 
+  left_join(metadata %>% dplyr::select(Site_Code, Lat, Long, biome_name))
+
+data_wide = 
+  data_long %>% 
+  dplyr::select(-c(column, analysis_type)) %>% 
+  pivot_wider(names_from = "abbreviated", values_from = "value")
+```
+
+
+### BASIC EXPLORATION
+
+```{r jitters, fig.height=10, fig.width=12}
+data_long %>% 
+  ggplot(aes(x = abbreviated, y = value, color = Location))+
+  geom_jitter(width = 0.3)+
+  facet_wrap(~analysis_type, scales = "free")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+```{r}
+
+biome_numbers = 
+  data_long %>% 
+  distinct(Site_Code, biome_name) %>% 
+  group_by(biome_name) %>% 
+  dplyr::summarise(n = n()) %>% 
+  mutate(biome_name = replace_na(biome_name, "unknown"))
+
+biome_numbers %>% 
+  mutate(biome_name = fct_reorder(biome_name, -n)) %>% 
+#  arrange(desc(n)) %>% 
+  ggplot(aes(x = 1, y = biome_name, color = biome_name))+
+  geom_point(aes(size = n), alpha = 0.5)+
+  geom_text(aes(label = n), color = "black", fontface = "bold", size = 6)+
+  geom_text(aes(label = biome_name, x = 1.25), 
+            color = "black", hjust = 0, size = 6)+
+  scale_color_manual(values = PNWColors::pnw_palette("Bay", 6))+
+  scale_radius(range = c(10, 32))+
+  xlim(0, 5)+
+  theme_void()+
+  theme(legend.position = "none",
+        panel.border = element_rect(fill = NA, color = "black"))
+
+```
+
+```{r}
+# biome map
+
+make_map_biome = function(bgc_wide, VAR, TITLE = "", LEGEND = VAR){
+  
+  ## Set CRS
+  common_crs <- 4326
+  
+  ## Set map size and point size
+  point_size <- 2
+  map_width = 9
+  map_height = 6
+  
+  # Set up map layers for plotting
+  
+  ## Make US states map cropped to contiguous region
+  us <- read_sf("Biogeochem/cb_2018_us_state_5m/cb_2018_us_state_5m.shp") %>% 
+    st_transform(., crs = common_crs) 
+  
+  us_bbox <- c(xmin = -125, xmax = -60, ymin = 20, ymax = 50)
+  region <- st_crop(us, y = us_bbox)
+  
+  # make a dataset merging metadata with site lat-longs
+  df_map <- 
+    bgc_wide %>% 
+    filter(!is.na(Lat) & !is.na(Long)) %>% 
+    st_as_sf(., coords = c("Long", "Lat"), crs = common_crs)
+  
+  # Make the base map with all sites
+  ## base_plot <- 
+  ggplot() + 
+    geom_sf(data = region, fill = "white", color = "grey70") + 
+    geom_sf(data = df_map, aes_string(fill = VAR), size = 7, shape = 21, color = "black", stroke = 1) + 
+    labs(title = TITLE,
+         fill = LEGEND)+
+    ggthemes::theme_map() + 
+    theme(legend.background = element_rect(fill = alpha("white", 0.0)), 
+          legend.key = element_rect(fill = "transparent"), 
+          legend.key.size = unit(1, "cm"),
+          legend.text = element_text(size = 12),
+          legend.title = element_text(size = 12, face = "bold", vjust = 0.7),
+          legend.position = "right",
+          plot.title = element_text(size = 14, face = "bold"),
+          plot.background = element_rect(color = "black", fill = NA, linewidth = 1)) + 
+#    scale_color_viridis_c(option = "plasma") +
+    scale_fill_manual(values = soilpalettes::soil_palette("redox2", 5))+
+ NULL
+  
+}
+
+make_map_biome(data_wide, VAR = "biome_name")
+
+
+
+
+```
+
+
+```{r}
+
+aov(TC ~ biome_name, data = data_wide) %>% summary()
+
+data_wide %>% 
+  ggplot(aes(x = biome_name, y = TC, color = Location))+
+  geom_jitter(size = 3, width = 0.2)
+```
+
+
+
+
+### CORRELATIONS AND PCAs
+
+```{r}
+
+compute_pca = function(bgc_wide){
+  library(ggbiplot)
+  
+
+  fit_pca_function = function(dat){
+    
+    dat %>% 
+      drop_na()
+    
+    num = 
+      dat %>%       
+      dplyr::select(where(is.numeric)) %>%
+      dplyr::mutate(row = row_number()) %>% 
+      drop_na()
+    
+    num_row_numbers = num %>% dplyr::select(row)
+    
+    grp = 
+      dat %>% 
+      dplyr::select(where(is.character)) %>% 
+      dplyr::mutate(row = row_number()) %>% 
+      right_join(num_row_numbers)
+    
+    
+    num = num %>% dplyr::select(-row)
+    pca_int = prcomp(num, scale. = T)
+    
+    list(num = num,
+         grp = grp,
+         pca_int = pca_int)
+  }
+  
+  ## PCA input files ----
+  pca_overall = fit_pca_function(bgc_wide %>% dplyr::select(-GWC)) 
+  
+  ## PCA plots overall ----
+  gg_pca_overall = 
+    ggbiplot(pca_overall$pca_int, obs.scale = 1, var.scale = 1,
+             groups = as.character(pca_overall$grp$biome_name), 
+             ellipse = TRUE, circle = FALSE, var.axes = TRUE, alpha = 0) +
+    geom_point(size = 4, stroke = 1.5, alpha = 0.8,
+               aes(shape = pca_overall$grp$Location,
+                   color = groups))+ 
+    scale_shape_manual(values = c(1, 16))+
+    labs(shape="",
+         color = "",
+         title = "Overall PCA",
+         subtitle = "")+
+    NULL
+  
+  gg_pca_overall
+  
+}
+
+compute_correlations = function(bgc_wide){
+  #library(corrplot)
+  
+
+  fit_correlations_function = function(dat, TITLE){
+    num = 
+      dat %>%       
+      dplyr::select(where(is.numeric)) %>%
+      drop_na()
+    
+    num_clean = 
+      num %>% 
+      rownames_to_column("row") %>% 
+      pivot_longer(-row) %>% 
+      separate(name, sep = "_", into = c("name")) %>% 
+      pivot_wider() %>% 
+      dplyr::select(-row)
+    
+    
+    m = cor(num_clean)
+    p.mat <- ggcorrplot::cor_pmat(num_clean)
+    
+    ggcorrplot::ggcorrplot(m, type = "lower",
+                           p.mat = p.mat,
+                           outline.color = "black",
+                           #   lab = TRUE, 
+                           insig = "blank",
+                           colors = c("#E46726", "white", "#6D9EC1"),
+                           title = TITLE)
+    
+  }
+  
+  corr_all = fit_correlations_function(bgc_wide %>% dplyr::select(-Lat, -Long, -GWC), TITLE = "Only significant correlations (p <= 0.05) shown here")
+  corr_all
+}
+
+```
+
+
+**PCA**
+```{r pca, fig.height=10, fig.width=12}
+compute_pca(data_wide %>% filter())
+```
+
+
+**Correlations**
+```{r corr_plot}
+compute_correlations(data_wide)
+```
+
+
+# MAPS
+
+```{r map_function}
+make_map = function(bgc_wide, VAR, TITLE = "", LEGEND = VAR){
+  
+  ## Set CRS
+  common_crs <- 4326
+  
+  ## Set map size and point size
+  point_size <- 2
+  map_width = 9
+  map_height = 6
+  
+  # Set up map layers for plotting
+  
+  ## Make US states map cropped to contiguous region
+  us <- read_sf("Biogeochem/cb_2018_us_state_5m/cb_2018_us_state_5m.shp") %>% 
+    st_transform(., crs = common_crs) 
+  
+  us_bbox <- c(xmin = -125, xmax = -60, ymin = 20, ymax = 50)
+  region <- st_crop(us, y = us_bbox)
+  
+  # make a dataset merging metadata with site lat-longs
+  df_map <- 
+    bgc_wide %>% 
+    filter(!is.na(Lat) & !is.na(Long)) %>% 
+    st_as_sf(., coords = c("Long", "Lat"), crs = common_crs)
+  
+  # Make the base map with all sites
+  ## base_plot <- 
+  ggplot() + 
+    geom_sf(data = region, fill = "white", color = "grey70") + 
+    geom_sf(data = df_map, aes_string(fill = VAR), size = 7, shape = 21, color = "black", stroke = 1) + 
+    labs(title = TITLE,
+         fill = LEGEND)+
+    ggthemes::theme_map() + 
+    theme(legend.background = element_rect(fill = alpha("white", 0.0)), 
+          legend.key = element_rect(fill = "transparent"), 
+          legend.key.size = unit(1, "cm"),
+          legend.text = element_text(size = 12),
+          legend.title = element_text(size = 12, face = "bold", vjust = 0.7),
+          legend.position = "bottom",
+          plot.title = element_text(size = 14, face = "bold"),
+          plot.background = element_rect(color = "black", fill = NA, linewidth = 1)) + 
+#    scale_color_viridis_c(option = "plasma") +
+    scale_fill_gradientn(colors = soilpalettes::soil_palette("redox2", 5))
+  
+}
+```
+
+```{r maps}
+make_map(data_wide, VAR = "SO4S", TITLE = "sulfate")
+make_map(data_wide, VAR = "TC", LEGEND = "TC, %")
+make_map(data_wide, VAR = "TN", LEGEND = "TN, %")
+
+make_map(data_wide, VAR = "TKN")
+
+make_map(data_wide, VAR = "Ca")
+make_map(data_wide, VAR = "Mg")
+make_map(data_wide, VAR = "Na")
+make_map(data_wide, VAR = "K")
+
+make_map(data_wide, VAR = "CEC")
+make_map(data_wide, VAR = "Bases")
+
+make_map(data_wide, VAR = "Zn")
+make_map(data_wide, VAR = "Cu")
+
+make_map(data_wide, VAR = "NO3N")
+make_map(data_wide, VAR = "NH4N")
+
+make_map(data_wide, VAR = "Clay")
+make_map(data_wide, VAR = "Sand")
+
+make_map(data_wide, VAR = "WEOC")
+make_map(data_wide, VAR = "MBC")
+```
