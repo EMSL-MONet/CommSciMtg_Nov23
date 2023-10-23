@@ -1,0 +1,92 @@
+﻿column,abbreviated,analysis_type,Variable.Name,Unit
+Sample_ID,Sample_ID,,"Identifier of soil core, 1000S_XXXX",
+Location,Location,,Top or bottom layer of each soil core,
+mean_GWC,GWC,GWC,Mean of gravimetric weight content (moisture content),g water per g dry soil
+K_mg_per_kg,K,CEC,Potassium content by ammonium acetate extraction,mg K per kg soil
+SO4-S_mg_per_kg,SO4S,SO4S,,mg S per kg soil
+B_mg_per_kg,B,Metals,,mg B per kg soil
+Zn_mg_per_kg,Zn,Metals,Zinc content by the DTPA (diethylenetriaminepentaacetic acid) micronutrient extraction,mg Zn per kg soil
+Mn_mg_per_kg,MN,Metals,Manganese content by the DTPA (diethylenetriaminepentaacetic acid) micronutrient extraction,mg Mn per kg soil
+Cu_mg_per_kg,Cu,Metals,Copper content by the DTPA (diethylenetriaminepentaacetic acid) micronutrient extraction,mg Cu per kg soil
+Fe_mg_per_kg,Fe,Metals,Iron content by the DTPA (diethylenetriaminepentaacetic acid) micronutrient extraction,mg Fe per kg soil
+Ca_Meq_per_100_g,Ca,CEC,Calcium content by ammonium acetate extraction,millequivalents per 100 grams of soil
+Mg_Meq_per_100_g,Mg,CEC,Magnesium content by ammonium acetate extraction,millequivalents per 100 grams of soil
+Na_Meq_per_100_g,Na,CEC,Sodium content by ammonium acetate extraction,millequivalents per 100 grams of soil
+Total_Bases_Meq_per_100_g,Bases,CEC,Total meq of bases on exchange sites,millequivalents per 100 grams of soil
+CEC_Meq_per_100_g,CEC,CEC,Cation exchange capacity,millequivalents per 100 grams of soil
+TKN_pct,TKN,TCTNTS,,percent
+Total_Sulfur_pct,TS,TCTNTS,,percent
+Total_Nitrogen_pct,TN,TCTNTS,,percent
+Total_Carbon_pct,TC,TCTNTS,,percent
+C_to_N_ratio,CN,TCTNTS,,
+NO3-N_mg_per_g_of_soil_mean,NO3N,DIN,Mean of nitrogen content in nitrate by KCl extraction,mg N per g soil
+NH4-N_mg_per_g_of_soil_mean,NH4N,DIN,Mean of nitrogen content in ammonium by KCl extraction,mg N per g soil
+NO3-N_mg_per_g_of_soil_median,,,Median of nitrogen content in nitrate by KCl extraction,mg N per g soil
+NH4-N_mg_per_g_of_soil_median,,,Median of nitrogen content in ammonium by KCl extraction,mg N per g soil
+NO3-N_mg_per_g_of_soil_standard_deviation,,,Standard deviation of nitrogen content in nitrate by KCl extraction,mg N per g soil
+NH4-N_mg_per_g_of_soil_standard_deviation,,,Standard deviation of nitrogen content in ammonium by KCl extraction,mg N per g soil
+NO3-N_mg_per_g_of_soil_standard_error,,,Standard error of nitrogen content in nitrate by KCl extraction,mg N per g soil
+NH4-N_mg_per_g_of_soil_standard_error,,,Standard error of nitrogen content in ammonium by KCl extraction,mg N per g soil
+P_Bicarb_mg_per_g_of_soil_mean,P-bicarb,P,Mean of phosphorus content in phosphate by sodium bicarbonate extraction,mg P per g soil
+P_Bicarb_mg_per_g_of_soil_median,,,Median of phosphorus content in phosphate by sodium bicarbonate extraction,mg P per g soil
+P_Bicarb_mg_per_g_of_soil_standard_deviation,,,Standard deviation of phosphorus content in phosphate by sodium bicarbonate extraction,mg P per g soil
+P_Bicarb_mg_per_g_of_soil_standard_error,,,Standard error of phosphorus content in phosphate by sodium bicarbonate extraction,mg P per g soil
+pH,pH,pH,Soil pH measured by 1:1 soil to water ratio,
+P_Extract,P-extract,P,"Method used for P extraction, Olsen or Bray protocol",
+B-glucosidase_ug_pNP_per_g_per_hour,,,"β-glucosidases enzyme activity, measured by the product ρ-nitrophenol (ρNP)",µg ρ-nitrophenol (ρNP) per g soi per hour
+B-glucosidase_activity_nmol_B-gluc_per_g_soil_per_hour,,,β-glucosidases enzyme activity,nmol β-glucosidases per g soil per hour
+Respiration_96_h_ug_CO2-C_per_g_soil_per_day,,,Soil respiration in 96 hours,µg CO2-C per g per day
+Respiration_24_h_ug_CO2-C_per_g_soil_per_day,,,Soil respiration in 24 hours,µg CO2-C per g per day
+Sand_pct,Sand,texture,Sand fraction of soil,percent
+Silt_pct,Silt,texture,Silt fraction of soil,percent
+Clay_pct,Clay,texture,Clay fraction of soil,percent
+WEOC_mean,WEOC,WEOC-TDN,Mean of water extracted organic carbon,mg/g
+WETN_mean,WETN,WEOC-TDN,Mean of water extracted total nitrogen,mg/g
+WEOC_sd,,,Standard deviation of water extracted organic carbon,mg/g
+WETN_sd,,,Standard deviation of water extracted total nitrogen,mg/g
+WEOC_se,,,Standard error of water extracted organic carbon,mg/g
+WETN_se,,,Standard error of water extracted total nitrogen,mg/g
+salt_C_mean,,,Mean of 0.5M K2SO4 extractable carbon,mg/g
+salt_N_mean,,,Mean of 0.5M K2SO4 extractable nitrogen,mg/g
+MBC_mean,MBC,MBC-MBN,Mean of microbial biomass carbon,mg/g
+MBN_mean,MBN,MBC-MBN,Mean of microbial biomass nitrogen,mg/g
+salt_C_sd,,,Standard deviation of 0.5M K2SO4 extractable carbon,mg/g
+salt_N_sd,,,Standard deviation of 0.5M K2SO4 extractable nitrogen,mg/g
+MBC_sd,,,Standard deviation of microbial biomass carbon,mg/g
+MBN_sd,,,Standard deviation of microbial biomass nitrogen,mg/g
+salt_C_se,,,Standard error of 0.5M K2SO4 extractable carbon,mg/g
+salt_N_se,,,Standard error of 0.5M K2SO4 extractable nitrogen,mg/g
+MBC_se,,,Standard error of microbial biomass carbon,mg/g
+MBN_se,,,Standard error of microbial biomass nitrogen,mg/g
+ROI.volume.xyz,,,ROI.volume.xyz,mm^3
+Voxel.size,,,Voxel.size,mm
+connected.pores,,,connected.pores,%
+pore.size.distribution_0-0.1mm,,,Number of pore.size.in 0.0-0.1 mm,#
+pore.size.distribution_0.1-0.2mm,,,Number of pore.size.in 0.1-0.2 mm,#
+pore.size.distribution_0.2-0.3mm,,,Number of pore.size.in 0.2-0.3 mm,#
+pore.size.distribution_0.3-0.4mm,,,Number of pore.size.in 0.3-0.4 mm,#
+pore.size.distribution_0.4-0.5mm,,,Number of pore.size.in 0.4-0.5 mm,#
+pore.size.distribution_0.5-0.75mm,,,Number of pore.size.in 0.5-0.75 mm,#
+pore.size.distribution_0.75-1mm,,,Number of pore.size.in 0.75-1 mm,#
+pore.size.distribution_1.0-5.0mm,,,Number of pore.size.in 1.0-5.0 mm,#
+pore.size.distribution_5.0-10.0mm,,,Number of pore.size.in 5.0-10.0 mm,#
+pore.size.distribution_10.0-25.0mm,,,Number of pore.size.in 10.0-25.0 mm,#
+pore.size.distribution_25.0-50.0mm,,,Number of pore.size.in 25.0-50.0 mm,#
+pore.size.distribution_>50.0mm,,,Number of pore.size.in >50.0 mm,#
+pore.size.min,,,Minimum of pore diameter,mm
+pore.size.max,,,maximum of pore diameter,mm
+pore.size.mean,,,Mean Equivalent Pore Diameter,mm
+pore.size.median,,,Median Equivalent Pore Size,mm
+pore.size.variance,,,Variance of Pore Size,mm
+pore.volume.mean,,,Mean of pore volume,mm^3
+pore.volume.fraction,,,Fraction of pore volume,%
+wet.bulk.density,,,wet.bulk.density,g/mm^3
+pnm.abs.permeability_x,,,Absolute permiability from pore network model in X direction,um^2
+pnm.total.flow.rate_x,,,Total flow rate from pore network model in X direction,mm^3
+pnm.tortuosity_x,,,Tortousity from pore network model in X direction,unitless
+pnm.abs.permeability_y,,,Absolute permiability from pore network model in Y direction,um^2
+pnm.total.flow.rate_y,,,Total flow rate from pore network model in Y direction,mm^3
+pnm.tortuosity_y,,,Tortousity from pore network model in Y direction,unitless
+pnm.abs.permeability_z,,,Absolute permiability from pore network model in Z direction,um^2
+pnm.total.flow.rate_z,,,Total flow rate from pore network model in Z direction,mm^3
+pnm.tortuosity_z,,,Tortousity from pore network model in Z direction,unitless

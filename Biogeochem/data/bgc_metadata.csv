@@ -1,0 +1,67 @@
+Site_Code,Site_Name_Long,Lat,Long,Vegetation,biome_name
+ANZA,Anza Borrego Desert State Park,33.305325,-116.254011,Desert scrub,Deserts & Xeric Shrublands
+BLAN,Blandy Experimental Farm,39.05941,-78.07207,Early successional forest,Temperate Broadleaf & Mixed Forests
+CFS1,Organic legume disk tillage,35.3828,-78.03818,"Previously hairy vetch and rye (agriculture), Current state: disked",Temperate Conifer Forests
+CFS2,Reduced tillage: organic,35.38329,-81.434174,Previously rye (Agriculture) Current state: disked,Temperate Broadleaf & Mixed Forests
+CLBJ,Caddo Lyndon B Johnson National Grasslands,33.401641,-97.570431,Post oak forest; controlled burn in January 2022,"Temperate Grasslands, Savannas & Shrublands"
+CPER,Central Plains Experimental Range NEON,40.81909,-104.748961,"Short grass prairie, arid plains, heavy drought","Temperate Grasslands, Savannas & Shrublands"
+DCFS,Dakota Coteau Field Site NEON,47.163063,-99.109193,"Grassland - BRIN2, PUPR, SYX, PEARG, SOCAC","Temperate Grasslands, Savannas & Shrublands"
+DELA,Dead Lake NEON,32.542,-87.804,Deciduous forest / woody wetland,Temperate Broadleaf & Mixed Forests
+DSNY,Disney Wilderness Preserve,28.125842,-81.434174,Grassland / Low scrub,Temperate Conifer Forests
+FTA3,Fluxtower location A3,46.9216469,-120.658644,"Cheatgrass Sage, bitterbrush, rabbit brush",Deserts & Xeric Shrublands
+FTA5,Fluxtower location A5,46.9045,-120.6241,Skeleton weed and cheetgrass with ground cover. See photo 1 (shrub steppe post burn),Deserts & Xeric Shrublands
+GRSM,Great Smoky Mountains National Park NEON,35.689102,-85.502462,Deciduous broadleaf,Temperate Broadleaf & Mixed Forests
+HARV,NEON D01 HARV Plot HARV_07,42.536689,-72.175706,Hardwood forest (decidious),Temperate Broadleaf & Mixed Forests
+ISCC,Relay Cover Crop,41.3689584,-91.6066851,Cereal rye cover (terminated) soybeans growing,"Temperate Grasslands, Savannas & Shrublands"
+ISNC,Relay No Cover,41.3690394,-91.6065423,"Soybeans, no CC residue","Temperate Grasslands, Savannas & Shrublands"
+JERC,The Jones Center At Ichauway NEON,31.197778,-84.463889,"Mixed forest, oak + pine forest",Temperate Conifer Forests
+JORN,Jornada Experimental Range NEON,32.59092,-106.84286,Desert,Deserts & Xeric Shrublands
+KONA,Konza Prairie Agroecosystem NEON,39.11012,-96.61216,Agriculture - planted corn,"Temperate Grasslands, Savannas & Shrublands"
+KONZ,Konza Prairie Biological Station NEON,39.10091,-96.56277,Tallgrass prairie,"Temperate Grasslands, Savannas & Shrublands"
+LENO,Lenoir Landing,31.854,-88.161,Mixed hardwood forest,Temperate Broadleaf & Mixed Forests
+MLBS,Mountain Lake Biological Station,37.3779,-80.52435,High elevation temperate forest,Temperate Broadleaf & Mixed Forests
+MOAB,MOAB NEON,38.24742,-109.3883,Shrub scrub,Deserts & Xeric Shrublands
+NIWO,Niwot Ridge,40.051577,-105.583114,Alpine tundra. Assorted forbs and graminoids,Temperate Conifer Forests
+NOGP,Northern Great Plains Research Laboratory NEON,46.770404,-100.913635,"Prairie - ARLU, LIPU, BRIN2, POPR, OESU3","Temperate Grasslands, Savannas & Shrublands"
+NWBA,"Northwest Baltimore Base of Slope Adelphi, MD",38.993891,-76.977789,Edge of decidious forest,Temperate Broadleaf & Mixed Forests
+NWBB,"Northwest Baltimore Mid Slope Adelphi, MD",38.994073,-76.977954,"Deciduous forest, step midslope, sycamore, ash",Temperate Broadleaf & Mixed Forests
+NWBC,"Northwest Baltimore Top of Slope Adelphi, MD",38.99425,-76.978175,"Deadwood forest, ash, oak",Temperate Broadleaf & Mixed Forests
+OCTB,Orchard Combat Training Center: 1983 OCTC Fire Burned,43.3055054,-116.2432178,"Bur buttercup, soul biocrust",Deserts & Xeric Shrublands
+OCTU,Orchard Combat Training Center: 1983 OCTC Fire-Unburned,43.3055281,-116.2429905,"Wyoming big Sagebrush, Bur buttercup, soil biocrust",Deserts & Xeric Shrublands
+OKPF,Oak Pine Forest,41.551919,-70.635356,"Oak pine woodland. Tree (canopy) layer vegetation: Pirus strobus (white pine), Pinus rigida (pitch pine), Quercus alba (white oak), Quercus velutina (black oak). Understory: Gaylussacia baccata (huckleberry).",Temperate Conifer Forests
+ONAQ,Onaqui NEON,40.17647,-112.4546,Shrub scrub,Deserts & Xeric Shrublands
+ORNL,Oak Ridge National Lab,35.96337,-84.28182,Temperate rainforest,Temperate Broadleaf & Mixed Forests
+OSBS,Ordway Swisher Biological Station,29.691389,-81.988611,"Mixed forest, oak and pine flat woods, palm and grass present",Temperate Conifer Forests
+PETF,Peterson Farm,41.553175,-70.639839,"Pasture grass prevuously found at Peterson Farm. To ID; needed more material and flowers/seeds/ Could not ID on day of sampling. Dactylis glomerata (orchard grass), Festuca arundinacea (tall fescue), Schyzachryium scoparium (litle bluestem), Agrostis Scabra (rough bentgrass), Erigrostis spectabilis (purple lovegrass)",Temperate Conifer Forests
+PHTU,Urbab CZO,39.982739,-75.154164,Sparse grass and chopped up dead leaves,Temperate Broadleaf & Mixed Forests
+PPRH,Urban CZO,40.050291,-75.033307,Grass and dead leaves,Temperate Broadleaf & Mixed Forests
+PRS1,Prosser Irrigated Bare,46.251743,-119.728729,Bare soil,Deserts & Xeric Shrublands
+PRS2,Prosser Non-irrigated Bare,46.251755,-119.728843,Bare soil,Deserts & Xeric Shrublands
+PUUM,Makaala Natural Area Reserve,19.55298,-155.31757,Ohia-Koa Mesic Wet forest with hapu'u understory,Tropical & Subtropical Moist Broadleaf Forests
+RMNP,Rocky Mountain National Park NEON,40.20332,-105.480967,"Semi-arid, sub-alpine ponderosa pine",Temperate Conifer Forests
+SCBI,Smithsonian Conservation Biology Institute,38.8896,-78.13865,Upland deciduous forest,Temperate Broadleaf & Mixed Forests
+SERC,Smithsonian Environmental Research Center,38.8912,-76.56173,Deciduous broadlead forest,Temperate Broadleaf & Mixed Forests
+SJER,San Joaquin Experimental Range,37.111218,-119.736475,Oak savannah grassland; sparse oak overstory,"Mediterranean Forests, Woodlands & Scrub"
+SOAP,Soaproot Saddle NEON,37.033662,-119.263687,"Grassy shrubland, sparce pine overstory",Temperate Conifer Forests
+SRER,Santa Rita Experimental Range,31.9114,-110.8359,"Sonoran desert lowland shrubs (LATR2, PRVE, 2IAC, FEWI, CAGI10, OPEN3)",Deserts & Xeric Shrublands
+SRR1,Santa Rita Experimental Range NEON,31.799945,-110.87298,"Flat alluvial plane, grassland with prosopis & cactaceae",Deserts & Xeric Shrublands
+STEI,Steigerwaldt-Chequamegon NEON,45.826576,-90.086272,Deciduous forest,Temperate Broadleaf & Mixed Forests
+STER,North Sterling NEON,40.462975,-103.030463,Agricultural sorghum monoculture,"Temperate Grasslands, Savannas & Shrublands"
+TALL,Talledega National Forest NEON,32.950693,-87.392825,"Evergreen forest, long leaf pine",Temperate Broadleaf & Mixed Forests
+TREE,Treehaven NEON,45.493228,-89.582708,Mixed forest,Temperate Broadleaf & Mixed Forests
+UKFS,University of Kansas Field Station NEON,39.0407,-95.19161,Easten decidious forest,"Temperate Grasslands, Savannas & Shrublands"
+UNDE,University of Notre Dame Environmental Research Center NEON,46.233367,-89.539726,Deciduous forest,Temperate Broadleaf & Mixed Forests
+UT12,22UT012 - High Elevation Rock Mountain UT - LeMonte/BYU,40.8469346,-109.7125711,Meadow on edge of pine and aspen forest,Temperate Conifer Forests
+UT19,22UT019 - High Elevation Rock Mountain UT - LeMonte/BYU,40.7018371,-109.5818412,Conifer forest,Temperate Conifer Forests
+UT23,22UT023 - High Elevation Rock Mountain UT - LeMonte/BYU,40.685293,-109.4999502,"Aspen, lupine, and lots of common juniper. Upper mountain slope",Temperate Conifer Forests
+UT24,22UT024 - High Elevation Rock Mountain UT - LeMonte/BYU,40.68204,-109.647218,"Conifer forest (lodgepole pine, Douglas fir, quaking aspen, common juniper)",Temperate Conifer Forests
+UT32,22UT032 - High Elevation Rock Mountain UT - LeMonte/BYU,40.6195637,-109.61135,"Sagebrush, needle  and threatgrass, lupine",Deserts & Xeric Shrublands
+WLLO,Winters Lane Lower Soil Pit,39.290382,-76.744543,"Deciduous, some grass",Temperate Broadleaf & Mixed Forests
+WLUP,Winters Lane Upper Soil Pit,39.290308,-76.74376,"Deciduous trees, skunk cabbage",Temperate Broadleaf & Mixed Forests
+WOOD,Chase Lake National Wildlife Refuge NEON,47.128415,-99.239356,"Prairie - RACO3, NAVI4, MESA, BOCU, POPR","Temperate Grasslands, Savannas & Shrublands"
+WREF,Wind River Experimental Forest NEON,45.824867,-121.9607,Evergreen forest,Temperate Conifer Forests
+WY01,22WY001,44.942634,-109.712562,"Grassland, shrubs",Temperate Conifer Forests
+WY03,22WY003,44.016047,-109.143313,Aspen vegetation,Temperate Conifer Forests
+WY09,22WY009,43.583143,-109.946757,"Riparian, shrubland valley",Temperate Conifer Forests
+WY10,22WY010,43.582587,-109.97175,Sagebrush meadow,Temperate Conifer Forests
+WY15,22WY015,42.581893,-108.751004,Conifer forest,Temperate Conifer Forests
