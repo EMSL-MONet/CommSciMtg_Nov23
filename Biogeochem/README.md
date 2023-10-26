@@ -1,21 +1,18 @@
-Biogeochemistry
+Biogeochemistry and Respiration
 ================
 
 ## Know Before You Go
 
-the data and scripts in this directory will be used for the following sessions:
-- Nov 7 ---
-- Nov 8 ---
+The data and scripts in this directory will be used for the following sessions:
+- Tues, Nov 7: Session 3 Data Tutorial 1 (Exploring Soil Biogeochemistry & Respiration Data)
+- Wed, Nov 8: Session 4 Hands on Learning, Breakout Room 3 (Soil Biogeochemistry and Respiration: From Raw to Processed Data)
+<br>
 
+We have a Shiny App for quick and easy exploration of the data discussed here. The App can be accessed [here](https://shinyproxy.emsl.pnnl.gov/app/1000soils).
 
-R script
+## Prerequistes for Session 4
 
-[1000 Soils Shiny App](https://shinyproxy.emsl.pnnl.gov/app/1000soils)
-
-## Prerequistes
-
-
-We will be using Excel for the respiration. Users will need to download the Solver add-in before the meeting, instructions are [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Respration%20Curve%20Fitting%20with%20Excel.docx). See step 5 for install instructions.
+We will use Microsoft Excel for the respiration learning session. Users will need to install the **Solver add-in** before the meeting, install instructions are provided in step 5 of the tutorial [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Respration%20Curve%20Fitting%20with%20Excel.docx).
 
 R. Download R and RStudio. [links to R]. users will need the following packages pre-installed ---
 mac vs. pc / vs \
