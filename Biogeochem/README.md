@@ -8,22 +8,29 @@ The data and scripts in this directory will be used for the following sessions:
 - Wed, Nov 8: Session 4 Hands on Learning, Breakout Room 3 (Soil Biogeochemistry and Respiration: From Raw to Processed Data)
 <br>
 
-We have a Shiny App for quick and easy exploration of the data discussed here. The App can be accessed [here](https://shinyproxy.emsl.pnnl.gov/app/1000soils).
+We have a Shiny App for quick and easy exploration of the data discussed here. 
+The App can be accessed [here](https://shinyproxy.emsl.pnnl.gov/app/1000soils).
 
 
 ## Prerequistes for Session 4
 
-- The _respiration_ demonstration and tutorial (link [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Respration%20Curve%20Fitting%20with%20Excel.docx)) will be conducted using Microsoft Excel. Users will need to install the **Solver add-in** before the meeting; install instructions are provided in step 5 of the tutorial. 
+- The _respiration_ demonstration and tutorial (link [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Respration%20Curve%20Fitting%20with%20Excel.docx))
+will be conducted using Microsoft Excel. Users will need to install the **Solver add-in** before the meeting;
+install instructions are provided in step 5 of the tutorial. 
 
-- The _biogeochemistry_ demonstration and tutorial (link [here]()) will be conducted using R, but users can use Microsoft Excel if they prefer. Users must download [R](https://cran.r-project.org/) and [RStudio](https://posit.co/downloads/) before the meeting. The tutorial contains scripts that use `{tidyverse}`; users must download and install the necessary packages prior to the session.
+- The _biogeochemistry_ demonstration and tutorial (link [here]()) will be conducted using R,
+but users can use Microsoft Excel if they prefer. Users must download [R](https://cran.r-project.org/)
+and [RStudio](https://posit.co/downloads/) before the meeting.
+The tutorial contains scripts that use `{tidyverse}`;
+users must download and install the necessary packages prior to the session.
 
 
 ## Data Access
 
-Data for this tutorial can be found in the `Biogeochem/data` subdirectory of this repository. Follow the links
-below and click the “download raw data” button.
+Data for this tutorial can be found in the `Biogeochem/data` subdirectory of this repository. 
+Follow the links below and click the “download raw data” button.
 
-![image](https://github.com/EMSL-MONet/CommSciMtg_Nov23/assets/50244730/1a5382ac-8708-455f-88b5-06b66c117725)
+![image](https://github.com/EMSL-MONet/CommSciMtg_Nov23/assets/50244730/5fecb9fe-ed78-445c-984c-d69372322831)
 
 
 file links:
