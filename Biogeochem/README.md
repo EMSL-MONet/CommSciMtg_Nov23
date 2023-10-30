@@ -14,7 +14,7 @@ The App can be accessed [here](https://shinyproxy.emsl.pnnl.gov/app/1000soils).
 
 ## Prerequistes for Session 4
 
-- The _respiration_ demonstration and tutorial (link [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Respration%20Curve%20Fitting%20with%20Excel.docx))
+- The _respiration_ demonstration and tutorial (link [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Instructions%20for%20Respration%20Curve%20Fitting%20with%20Excel.docx))
 will be conducted using Microsoft Excel. Users will need to install the **Solver add-in** before the meeting;
 install instructions are provided in step 5 of the tutorial. 
 
