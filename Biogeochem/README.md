@@ -50,14 +50,11 @@ file links:
 
 ### Agenda
 1-2 p.m on Tuesday, November 7, 2023
+-5 mins: Overview of MONet Shiny App (Qian)
+  oIntroduce the background and purpose of the App.
+  oShow the list of biogeochemical data used in the App.
 
-•5 mins: Overview of MONet Shiny App (Qian)
-
-oIntroduce the background and purpose of the App.
-
-oShow the list of biogeochemical data used in the App.
-
-•25 mins: Go over details in MONet Shiny App Visualization Tool (Layton)
+-25 mins: Go over details in MONet Shiny App Visualization Tool (Layton)
 
 oShow each functions in the app.
 
