@@ -83,19 +83,19 @@ oFit respiration curve and compare fitting parameters between samples.
 
   •10 mins: Intro to the session (Whole group)
   
-    oIntroduce two sections (biogeochemistry data and respiration data)
+    o Introduce two sections (biogeochemistry data and respiration data)
     
-    oSet up guidelines and show data and examples.
+    o Set up guidelines and show data and examples.
     
-•30 mins: Students Explore Data (Three teams)
+  •30 mins: Students Explore Data (Three teams)
 
-    oUse a subset of data to explore biogeochemistry and respiration.
+    o Use a subset of data to explore biogeochemistry and respiration.
     
-•10 mins: Feedbacks and Discussion (Whole group)
+  •10 mins: Feedbacks and Discussion (Whole group)
 
-    o2 or 3 students share their findings
+    o 2 or 3 students share their findings
     
-•5 mins: Recap and Q&A
+  •5 mins: Recap and Q&A
 
 
 
