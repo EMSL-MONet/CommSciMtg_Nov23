@@ -50,25 +50,20 @@ file links:
 
 ### Agenda
 1-2 p.m on Tuesday, November 7, 2023
--5 mins: Overview of MONet Shiny App (Qian)
-  oIntroduce the background and purpose of the App.
-  oShow the list of biogeochemical data used in the App.
+  • 5 mins: Overview of MONet Shiny App (Qian)
+    o Introduce the background and purpose of the App.
+    o Show the list of biogeochemical data used in the App.
 
--25 mins: Go over details in MONet Shiny App Visualization Tool (Layton)
+  • 25 mins: Go over details in MONet Shiny App Visualization Tool (Layton)
+    o Show each functions in the app.
 
-oShow each functions in the app.
+  • 15 mins: Exploring Soil Biogeochemistry data by using the Shiny App (Kaizad)
+    o Show hypothesis driven correlations.
 
-•15 mins: Exploring Soil Biogeochemistry data by using the Shiny App (Kaizad)
-
-oShow hypothesis driven correlations.
-
-•15 mins: Exploring MONet Respiration data (Qian)
-
-oIntroduce respirometer and protocol.
-
-oShow data processing from raw to processed data.
-
-oFit respiration curve and compare fitting parameters between samples.
+  • 15 mins: Exploring MONet Respiration data (Qian)
+    o Introduce respirometer and protocol.
+    o Show data processing from raw to processed data.
+    o Fit respiration curve and compare fitting parameters between samples.
 
 ## Workshop Session: Session 4 (hands on session)
 ### Learning Objective
