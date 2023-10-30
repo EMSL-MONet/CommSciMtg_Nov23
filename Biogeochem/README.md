@@ -44,7 +44,9 @@ file links:
 
 ## Workshop Session: Session 3
 ### Learning Objective
-- demonstrate the functionality of the Shiny App and interpret ....
+- Demonstrate the functionality of the Shiny App.
+- Understand how to explore the biogeochemistry data.
+- Understand how to transfer respiration data from raw to processed data and how to plot and fit respiration data.
 
 ### Agenda
 1-2 p.m on Tuesday, November 7, 2023
@@ -70,6 +72,7 @@ oFit respiration curve and compare fitting parameters between samples.
 ### Agenda
 
 10am, 11am, noon (three 1-hour session) on Wednesday, November 8, 2023
+
   •10 mins: Intro to the session (Whole group)
     oIntroduce two sections (biogeochemistry data and respiration data)
     oSet up guidelines and show data and examples.
