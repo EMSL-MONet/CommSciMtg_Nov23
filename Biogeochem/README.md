@@ -14,7 +14,7 @@ The App can be accessed [here](https://shinyproxy.emsl.pnnl.gov/app/1000soils).
 
 ## Prerequistes for Session 4
 
-- The _respiration_ demonstration and tutorial (link [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Respration%20Curve%20Fitting%20with%20Excel.docx))
+- The _respiration_ demonstration and tutorial (link [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Instructions%20for%20Respration%20Curve%20Fitting%20with%20Excel.docx))
 will be conducted using Microsoft Excel. Users will need to install the **Solver add-in** before the meeting;
 install instructions are provided in step 5 of the tutorial. 
 
@@ -50,25 +50,28 @@ file links:
 
 ### Agenda
 1-2 p.m on Tuesday, November 7, 2023
--5 mins: Overview of MONet Shiny App (Qian)
-  oIntroduce the background and purpose of the App.
-  oShow the list of biogeochemical data used in the App.
 
--25 mins: Go over details in MONet Shiny App Visualization Tool (Layton)
+  • 5 mins: Overview of MONet Shiny App (Qian)
+  
+    o Introduce the background and purpose of the App.
+    
+    o Show the list of biogeochemical data used in the App.
 
-oShow each functions in the app.
+  • 25 mins: Go over details in MONet Shiny App Visualization Tool (Layton)
+  
+    o Show each functions in the app.
 
-•15 mins: Exploring Soil Biogeochemistry data by using the Shiny App (Kaizad)
+  • 15 mins: Exploring Soil Biogeochemistry data by using the Shiny App (Kaizad)
 
-oShow hypothesis driven correlations.
+    o Show hypothesis driven correlations.
 
-•15 mins: Exploring MONet Respiration data (Qian)
-
-oIntroduce respirometer and protocol.
-
-oShow data processing from raw to processed data.
-
-oFit respiration curve and compare fitting parameters between samples.
+  • 15 mins: Exploring MONet Respiration data (Qian)
+  
+    o Introduce respirometer and protocol.
+    
+    o Show data processing from raw to processed data.
+    
+    o Fit respiration curve and compare fitting parameters between samples.
 
 ## Workshop Session: Session 4 (hands on session)
 ### Learning Objective
@@ -83,19 +86,19 @@ oFit respiration curve and compare fitting parameters between samples.
 
   •10 mins: Intro to the session (Whole group)
   
-    oIntroduce two sections (biogeochemistry data and respiration data)
+    o Introduce two sections (biogeochemistry data and respiration data)
     
-    oSet up guidelines and show data and examples.
+    o Set up guidelines and show data and examples.
     
-•30 mins: Students Explore Data (Three teams)
+  •30 mins: Students Explore Data (Three teams)
 
-    oUse a subset of data to explore biogeochemistry and respiration.
+    o Use a subset of data to explore biogeochemistry and respiration.
     
-•10 mins: Feedbacks and Discussion (Whole group)
+  •10 mins: Feedbacks and Discussion (Whole group)
 
-    o2 or 3 students share their findings
+    o 2 or 3 students share their findings
     
-•5 mins: Recap and Q&A
+  •5 mins: Recap and Q&A
 
 
 
