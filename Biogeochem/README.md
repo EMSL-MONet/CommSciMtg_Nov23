@@ -62,23 +62,21 @@ oFit respiration curve and compare fitting parameters between samples.
 
 ## Workshop Session: Session 4 (hands on session)
 ### Learning Objective
-- demonstrate patterns and correlations among biogeochemical variables
-
-Respiration:
+- Demonstrate patterns and correlations among biogeochemical variables.
 - Understand how to transfer respiration data from raw to processed data.
 - Plot respiration data and conduct non-linear fitting.
-- Correlate fitting parameters with other metadata of the samples. 
+- Correlate fitting parameters of respiration data with other metadata of the samples. 
 
 ### Agenda
 
 10am, 11am, noon (three 1-hour session) on Wednesday, November 8, 2023
-•10 mins: Intro to the session (Whole group)
-oIntroduce two sections (biogeochemistry data and respiration data)
-oSet up guidelines and show data and examples.
+  •10 mins: Intro to the session (Whole group)
+    oIntroduce two sections (biogeochemistry data and respiration data)
+    oSet up guidelines and show data and examples.
 •30 mins: Students Explore Data (Three teams)
-oUse a subset of data to explore biogeochemistry and respiration.
+    oUse a subset of data to explore biogeochemistry and respiration.
 •10 mins: Feedbacks and Discussion (Whole group)
-o2 or 3 students share their findings
+    o2 or 3 students share their findings
 •5 mins: Recap and Q&A
 
 
