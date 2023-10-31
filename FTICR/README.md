@@ -29,7 +29,7 @@ All the materials needed for the hands on session are located in this repository
 ### Learning Objective
 After completing this hands on session, you will be able to:
 
-•	Load and inspect FT-ICR-MS data using Jupyter Notebook
+•	Load and inspect FT-ICR-MS data using Jupyter Notebook <br>
 •	Run code within Jupyter Notebook to execute Python code and render FTICRMS visualizations <br>
 •	Calculate molecular properties and make common plots of data (van krevelen, DBE, aromaticity, elemental compositions, class compositions) <br>
 •	Correlate FT-ICR-MS molecular properties with measured soil properties <br>
