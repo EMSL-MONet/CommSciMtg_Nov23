@@ -40,8 +40,8 @@ After completing this hands on session, you will be able to:
 python: https://www.python.org/downloads/  <br>
 jupyter notebook: https://jupyter.org/install  <br>
 
-2. Download the FTICRMS folder for this session from GitHUb including:
-•	Jupyter Notebook ipynb workshop file: "MONet_HandsOnSession.ipynb" <br>
+2. Download the FTICRMS folder for this session from GitHUb including:  <br>
+•	Jupyter Notebook file: "MONet_HandsOnSession.ipynb" <br>
 •	Test file "HelloWorld_test.ipynb" <br>
 •	Datafiles:  <br>
 "icr.reps.combined_v1_clean.csv" (1000Soils Pilot FT-ICR-MS data) <br>
