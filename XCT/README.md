@@ -43,18 +43,22 @@
 
 ## Agenda on contents of the workshop
 
-| Activity | Description |
-|---|---|---|
-| **Learning outcomes of the day:** understanding 3D data, its processing and analysis as well as visualization with an emphasis of flow and transport in soil |
-| **What did we do?** |
-| Opened 3D XCT image data |
-| Performed basic data processing steps |
-| Segmented porosity from soil data |
-| Visualized pore structure |
-| Performed basic pore size-analysis |
-| Performed simple CV XCT data analysis using Google Colab Notebook |
-| Visualized the generated VTK file using ParaView |
-| **What can you do on your own?** |
-| All of the steps in this hands-on tutorial can be done on your own |
+### Learning outcomes of the day:
+
+* Understanding 3D data, its processing and analysis, as well as visualization with an emphasis on flow and transport in soil
+
+### What did we do?
+
+* Opened 3D XCT image data
+* Performed basic data processing steps
+* Segmented porosity from soil data
+* Visualized pore structure
+* Performed basic pore size analysis
+* Performed simple CV XCT data analysis using Google Colab Notebook
+* Visualized the generated VTK file using ParaView
+
+### What can you do on your own?
+
+* All of the steps in this hands-on tutorial can be done on your own
 
 
