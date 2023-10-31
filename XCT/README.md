@@ -61,4 +61,9 @@
 
 * All of the steps in this hands-on tutorial can be done on your own
 
+## Other resources
+
+### See Data Tutorial presentation in Session 3: 
+
+* Tutorial 2 - XCT Raw Data Processing and Analysis for Comprehensive Insights
 
