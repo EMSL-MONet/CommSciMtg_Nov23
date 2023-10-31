@@ -47,7 +47,7 @@ jupyter notebook: https://jupyter.org/install  <br>
 "icr.reps.combined_v1_clean.csv" (1000Soils Pilot FT-ICR-MS data) <br>
 "Summary_Merged_ZenodoShinyAp.csv" (Summary file) <br>
 
-3. Run the test file script that will import functions you will need during the hands on session.
+3. Run the test file script "HelloWorld_test.ipynb". This will import functions you will need during the hands on session.  <br>
 If you have any trouble or do not see a “Congratulations, you are ready for the hands on session on Nov 8”, please
 contact Will Kew (wkew@pnnl.gov) or Nicole DiDonato (nicole.didonato@pnnl.gov) with any issues or questions.
 ### On The Day
