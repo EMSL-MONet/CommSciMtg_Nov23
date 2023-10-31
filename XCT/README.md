@@ -35,16 +35,12 @@
 
 ## Where is the data?
 
-Link to download the data for the Fiji-based exercise: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8377888.svg)](https://doi.org/10.5281/zenodo.8377888)
-
-For the ParaView-Googe Colab exercise (Simple XCT toy data analysis using CV) the link is:
-
-XCT (sub-volume) Google Colab Notebook: https://colab.research.google.com/drive/1Tbm49gRwDpvYKg5ukrrtfSo8yshRLil7?usp=sharing \
-Complete XCT data and associated analysis are available through Jupyter Lab notebooks. Please see XCT_FullDataAnalysis_Notebook.ipynb
-
-The dataset for this CV-based analysis is available in the Images Folder of this GitHub. 
+* Link to download the data for the Fiji-based exercise: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8377888.svg)](https://doi.org/10.5281/zenodo.8377888)
+* For the ParaView-Googe Colab exercise (Simple XCT toy data analysis using CV) the link is:
+* XCT (sub-volume) Google Colab Notebook: https://colab.research.google.com/drive/1Tbm49gRwDpvYKg5ukrrtfSo8yshRLil7?usp=sharing
+* Complete XCT data and associated analysis are available through Jupyter Lab notebooks. Please see XCT_FullDataAnalysis_Notebook.ipynb
+* The dataset for this CV-based analysis is available in the Images Folder of this GitHub. 
 
 
-The dataset for this CV-based analysis is available in the Images Folder of this GitHub.
 
 
