@@ -37,8 +37,8 @@ After completing this hands on session, you will be able to:
 
 ### Before The Day
 1. If you do not already have python and jupyter notebook, please install here:
-python: https://www.python.org/downloads/
-jupyter notebook: https://jupyter.org/install 
+python: https://www.python.org/downloads/  <br>
+jupyter notebook: https://jupyter.org/install  <br>
 
 2. Download the FTICRMS folder for this session from GitHUb including:
 •	Jupyter Notebook ipynb workshop file: "MONet_HandsOnSession.ipynb" <br>
