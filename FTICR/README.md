@@ -51,9 +51,9 @@ jupyter notebook: https://jupyter.org/install  <br>
 If you have any trouble or do not see a “Congratulations, you are ready for the hands on session on Nov 8”, please
 contact Will Kew (wkew@pnnl.gov) or Nicole DiDonato (nicole.didonato@pnnl.gov) with any issues or questions.
 ### On The Day
-Bring your computer.
-Have a python installed and jupyter notebook running.
-Have datafiles downloaded in a known location on your computer.
-Be ready to learn, network and have fun!
+Bring your computer.  <br>
+Have a python installed and jupyter notebook running. <br>
+Have datafiles downloaded in a known location on your computer. <br>
+Be ready to learn, network and have fun! <br>
 ### After The Day 
 Enjoy data exploration! Reach out to other participants and EMSL staff with questions and for collaborations. Be sure to write up and publish your findings! 
