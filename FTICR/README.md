@@ -5,9 +5,9 @@ What: Session 4: Hands-on Learning   <br>
 When: Wednesday Nov 8th: 10am – 11 am, 11 am- 12 noon, or  12 noon- 1pm  <br>
 Where:  EMSL 1077, Breakout Room 2
 
-•	Nicole DiDonato | Chemist | EMSL
-•	Will Kew |Chemist| EMSL
-•	Cheng Shi | DGEP fellow/PhD student | Oregon State University
+•	Nicole DiDonato | Chemist | EMSL  <br>
+•	Cheng Shi | DGEP fellow/PhD student | Oregon State University <br>
+•	Will Kew |Chemist| EMSL <br>
 
 
 ## Know Before You Go
