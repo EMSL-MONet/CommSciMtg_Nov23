@@ -1,7 +1,8 @@
 ---
-title: "Session 3: Data Tutorial"
+title: "Session 3: Biogeochemistry Data Tutorial"
+author: Kaizad Patel
 output: html_document
-date: "2023-10-23"
+date: "2023-11-07"
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}
@@ -10,15 +11,25 @@ knitr::opts_chunk$set(echo = TRUE,
                       warning = FALSE)
 ```
 
+**MONet Community Science Meeting 2023**
+
+This RMarkdown document contains code and scripts for preliminary processing and data visualization of soil biogeochemistry data. 
+These graphs were created for use in Session 3 (Biogeochemistry Data Tutorial) on Tuesday, November 7.
+
+
 ## Setup
 
 Load packages
 
 ```{r packages}
-library(tidyverse)
-library(maptools); library(sf) # for biomes
+library(tidyverse) # for general data wrangling and visualization
+library(maptools); library(sf) # for maps
 library(ggthemes) # for theme_map
-theme_set(theme_bw(base_size = 12))
+library(ggcorrplot) # to plot correlation matrix
+library(soilpalettes) # for color palettes
+# Install `soilpalettes` using: install.packages("devtools"); devtools::install_github("kaizadp/soilpalettes")
+
+theme_set(theme_bw(base_size = 12)) # set default ggplot theme
 ```
 
 Import files
@@ -41,9 +52,11 @@ data_long =
 data_wide = 
   data_long %>% 
   dplyr::select(-c(column, analysis_type)) %>% 
-  pivot_wider(names_from = "abbreviated", values_from = "value")
+  pivot_wider(names_from = "abbreviated", values_from = "value") %>% 
+  mutate(Location = factor(Location, levels = c("TOP", "BTM")))
 ```
 
+--- 
 
 ## BASIC EXPLORATION
 
@@ -56,33 +69,29 @@ data_long %>%
 ```
 
 
-We had sites across five biomes
+The samples were collected from sites spread across five biomes
 
 ```{r biome_numbers}
-
+## Create summary of biome counts
 biome_numbers = 
   data_long %>% 
   distinct(Site_Code, biome_name) %>% 
   group_by(biome_name) %>% 
   dplyr::summarise(n = n()) %>% 
-#  mutate(biome_name = replace_na(biome_name, "unknown")) %>% 
   force()
 
 biome_numbers %>% knitr::kable()
 ```
 
-```{r biome_numbers_gg, eval=FALSE}
+```{r biome_numbers_gg, eval=FALSE, echo=FALSE}
 
 biome_numbers %>% 
   drop_na() %>% 
-#  mutate(biome_name = fct_reorder(biome_name, -n)) %>% 
-#  arrange(desc(n)) %>% 
   ggplot(aes(x = 1, y = biome_name, fill = biome_name))+
   geom_point(aes(size = n), alpha = 1, shape = 21, color = "black", stroke = 1)+
   geom_text(aes(label = n), color = "white", fontface = "bold", size = 6)+
   geom_text(aes(label = biome_name, x = 1.25), 
             color = "black", hjust = 0, size = 6)+
-  #scale_color_manual(values = PNWColors::pnw_palette("Bay", 6))+
   scale_fill_manual(values = soilpalettes::soil_palette("redox2", 5))+
   scale_radius(range = c(10, 32))+
   xlim(0, 5)+
@@ -91,7 +100,7 @@ biome_numbers %>%
         panel.border = element_rect(fill = NA, color = "black"))
 ```
 
-```{r biomes_map}
+```{r biomes_map_function}
 # biome map
 
 make_map_biome = function(bgc_wide, VAR, TITLE = "", LEGEND = VAR){
@@ -141,10 +150,13 @@ make_map_biome = function(bgc_wide, VAR, TITLE = "", LEGEND = VAR){
   
 }
 
+```
+
+```{r, fig.height=7, fig.width=13}
+
 make_map_biome(data_wide, VAR = "biome_name")
 
 ```
-
 
 
 ---
@@ -195,7 +207,7 @@ We use the `ggcorrplot` package for this.
 # So, for an easier plot, subset select variables and then re-run the correlation matrix.
 
 data_wide_subset = data_wide %>% 
-  dplyr::select(GWC, Ca, Mg, Na, K, Bases, CEC, 
+  dplyr::select(Ca, Mg, Na, K, Bases, CEC, 
                 Sand, Silt, Clay, SO4S, NO3N, NH4N,
                 TC, TN, pH, Lat, Long, Location)
 
@@ -203,7 +215,7 @@ fit_correlations_function(data_wide_subset %>% filter(Location == "TOP"))
 ```
 
 
-```{r pca_function, eval=FALSE}
+```{r pca_function, eval=FALSE, echo=FALSE}
 
 compute_pca = function(bgc_wide){
   library(ggbiplot)
@@ -261,7 +273,7 @@ compute_pca = function(bgc_wide){
 
 ```
 
-```{r pca, fig.height=10, fig.width=12, eval=FALSE}
+```{r pca, fig.height=10, fig.width=12, eval=FALSE, echo=FALSE}
 compute_pca(data_wide)
 ```
 
@@ -272,40 +284,46 @@ compute_pca(data_wide)
 data_wide %>% 
   ggplot(aes(x = TC, y = TN))+
   geom_point()+
-  geom_smooth(method = "lm", se = F)
+  geom_smooth(method = "lm", se = F)+
+  labs(x = "Total C (%)",
+       y = "Total N (%)")
 
 
 data_wide %>% 
   ggplot(aes(x = Clay, y = Sand))+
   geom_point()+
-  geom_smooth(method = "lm", se = F)
+  geom_smooth(method = "lm", se = F)+
+  labs(x = "Clay (%)",
+       y = "Sand (%)")
 
 
 data_wide %>% 
-  ggplot(aes(x = CEC, y = Clay))+
+  ggplot(aes(y = CEC, x = Clay))+
   geom_point()+
-  geom_smooth(method = "lm")+
-  facet_wrap(~Location)
-
-lm(CEC ~ Clay, data = data_wide) %>% summary()
+  geom_smooth(method = "lm", se = F)+
+  labs(y = "Cation Exchange Capacity (meq/100g)",
+       x = "Clay (%)")
 
 
 data_wide %>% 
   ggplot(aes(x = Ca, y = Bases))+
   geom_point()+
-  geom_smooth(method = "lm", se = F)
+  geom_smooth(method = "lm", se = F)+
+  labs(y = "Total bases (meq/100g)",
+       x = "Calcium (meq/100g)")
 
 
 
 data_wide %>% 
-  filter(Location == "TOP") %>% 
   ggplot(aes(x = TC, y = WEOC))+
   geom_point()+
-  geom_smooth(method = "lm", se = F)
+  geom_smooth(method = "lm", se = F)+
+  labs(x = "Total carbon (%)",
+       y = "Water-extractable organic carbon (mg/g)")
 
 ```
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=FALSE}
 ## additional correlations
 
 x = 
@@ -341,10 +359,11 @@ x_long %>%
 
 ## JITTER PLOTS
 
-These are "jittered" scatter plots showing distribution of the variables by depth or by biome.
+These are "jittered" scatter plots showing distribution of the variables by depth or by biome.  
+Also included is code to calculate the analysis of variance (ANOVA)
 
 
-1. total carbon (TC)
+### 1. total carbon (TC)
 
 TC ANOVA
 
@@ -361,7 +380,6 @@ plot TC by depth
 
 data_wide %>% 
   ggplot(aes(x = Location, y = TC, color = Location))+
-  #geom_jitter(size = 3, width = 0.2)+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3, outlier.colour = NA)+
   geom_jitter(size = 3, width = 0.3)
 
@@ -369,19 +387,19 @@ data_wide %>%
 
 plot TC by biome
 
-```{r}
+```{r, fig.height=5, fig.width=9}
 set.seed(1234)
 data_wide %>% 
   ggplot(aes(x = biome_name, y = TC, color = Location))+
-  #geom_jitter(size = 3, width = 0.2)+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3)+
   geom_point(size = 3,
              position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.5))+
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))+
+  labs(x = "")
 ```
 
 
-2. CEC
+### 2. CEC
 
 CEC ANOVA
 
@@ -397,15 +415,15 @@ plot CEC by depth
 
 data_wide %>% 
   ggplot(aes(x = Location, y = CEC, color = Location))+
-  #geom_jitter(size = 3, width = 0.2)+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3, outlier.colour = NA)+
-  geom_jitter(size = 3, width = 0.3)
+  geom_jitter(size = 3, width = 0.3)+
+  labs(x = "")
 
 ```
 
 plot CEC by biome
 
-```{r}
+```{r, fig.height=5, fig.width=9}
 set.seed(1234)
 data_wide %>% 
   ggplot(aes(x = biome_name, y = CEC, color = Location))+
@@ -413,11 +431,12 @@ data_wide %>%
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3)+
   geom_point(size = 3,
              position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.5))+
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))+
+  labs(x = "")
 ```
 
 
-3. Clay
+### 3. Clay
 
 Clay ANOVA
 
@@ -433,28 +452,28 @@ plot Clay by depth
 
 data_wide %>% 
   ggplot(aes(x = Location, y = Clay, color = Location))+
-  #geom_jitter(size = 3, width = 0.2)+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3, outlier.colour = NA)+
-  geom_jitter(size = 3, width = 0.3)
+  geom_jitter(size = 3, width = 0.3)+
+  labs(x = "")
 
 ```
 
 plot Clay by biome
 
-```{r}
+```{r, fig.height=5, fig.width=9}
 set.seed(1234)
 data_wide %>% 
   ggplot(aes(x = biome_name, y = Clay, color = Location))+
-  #geom_jitter(size = 3, width = 0.2)+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3)+
   geom_point(size = 3,
              position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.5))+
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))+
+  labs(x = "")
 ```
 
 
 
-4. WEOC
+### 4. WEOC
 
 WEOC ANOVA
 
@@ -470,28 +489,24 @@ plot WEOC by depth
 
 data_wide %>% 
   ggplot(aes(x = Location, y = WEOC, color = Location))+
-  #geom_jitter(size = 3, width = 0.2)+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3, outlier.colour = NA)+
-  geom_jitter(size = 3, width = 0.3)
+  geom_jitter(size = 3, width = 0.3)+
+  labs(x = "")
 
 ```
 
 plot WEOC by biome
 
-```{r}
+```{r, fig.height=5, fig.width=9}
 set.seed(1234)
 data_wide %>% 
   ggplot(aes(x = biome_name, y = WEOC, color = Location))+
-  #geom_jitter(size = 3, width = 0.2)+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3)+
   geom_point(size = 3,
              position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.5))+
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))+
+  labs(x = "")
 ```
-
-
-
-
 
 
 ---
@@ -554,13 +569,15 @@ make_map = function(bgc_wide, VAR, TITLE = "", LEGEND = VAR){
 Now, make the maps
 
 ```{r maps}
-make_map(data_wide, VAR = "TC", LEGEND = "TC, %")
-make_map(data_wide, VAR = "WEOC", LEGEND = "WEOC")
-make_map(data_wide, VAR = "MBC", LEGEND = "MBC")
 
-make_map(data_wide, VAR = "TN", LEGEND = "TN, %")
+make_map(data_wide %>% filter(Location == "TOP"), VAR = "TC", LEGEND = "TC (%)")
+make_map(data_wide %>% filter(Location == "TOP"), VAR = "WEOC", LEGEND = "WEOC (mg/g)")
+make_map(data_wide %>% filter(Location == "TOP"), VAR = "MBC", LEGEND = "MBC (mg/g)")
 
-make_map(data_wide %>% filter(Location == "BTM"), VAR = "CEC")
+make_map(data_wide %>% filter(Location == "TOP"), VAR = "TN", LEGEND = "TN (%)")
 
-make_map(data_wide, VAR = "Clay")
+make_map(data_wide %>% filter(Location == "BTM"), VAR = "CEC", LEGEND = "CEC (meq/100g)")
+
+make_map(data_wide %>% filter(Location == "TOP"), VAR = "Clay", LEGEND = "Clay (%)")
+
 ```
