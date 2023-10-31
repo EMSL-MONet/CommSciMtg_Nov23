@@ -5,12 +5,13 @@ What: Session 4: Hands-on Learning
 When: Wednesday Nov 8th: 10am – 11 am, 11 am- 12 noon, or  12 noon- 1pm
 Where:  EMSL 1077, Breakout Room 2
 
+•	Nicole DiDonato | Chemist | EMSL
 •	Will Kew |Chemist| EMSL
 •	Cheng Shi | DGEP fellow/PhD student | Oregon State University
-•	Nicole DiDonato | Chemist | EMSL
+
 
 ## Know Before You Go
-This hands on session is intended to allow participants to become familiar with FTICRMS data, common visualizations and data usages. The material will be presented using jupyter notebooks designed for novice users. Participants should make every effort to utilize the jupyter notebook in order to get the most out of the session, even they are more familiar with another scripting language.
+This hands on session is intended to allow participants to become familiar with FT-ICR-MS data, common visualizations and data usage. The material will be presented using a jupyter notebook script designed for novice users. Participants should make every effort to utilize the jupyter notebook in order to get the most out of the session, even they are more familiar with another scripting language.
 
 ## Prerequistes
 Python install: https://www.python.org/downloads/  (Tested on version 3.11.3 and 3.10)
@@ -43,8 +44,8 @@ jupyter notebook: https://jupyter.org/install
 •	Jupyter Notebook ipynb workshop file: "MONet_HandsOnSession.ipynb"
 •	Test file "HelloWorld_test.ipynb"
 •	Datafiles: 
-1000Soils Pilot FT-ICR-MS data: "icr.reps.combined_v1_clean.csv"
-Summed File: "Summary_Merged_ZenodoShinyAp.csv"
+"icr.reps.combined_v1_clean.csv" (1000Soils Pilot FT-ICR-MS data)
+"Summary_Merged_ZenodoShinyAp.csv" (Summed File)
 
 3. Run the test file script that will import functions you will need during the hands on session.
 If you have any trouble or do not see a “Congratulations, you are ready for the hands on session on Nov 8”, please
