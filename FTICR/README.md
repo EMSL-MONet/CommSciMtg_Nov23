@@ -36,7 +36,7 @@ After completing this hands on session, you will be able to:
 •	Become familiar with FTICRMS data and visualizations <br>
 
 ### Before The Day
-1. If you do not already have python and jupyter notebook, please install here:
+1. If you do not already have python and jupyter notebook, please install here:  <br>
 python: https://www.python.org/downloads/  <br>
 jupyter notebook: https://jupyter.org/install  <br>
 
