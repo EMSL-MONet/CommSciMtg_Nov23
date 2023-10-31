@@ -1,8 +1,8 @@
 # FTICR MS
 
 ## Workshop Session
-What: Session 4: Hands-on Learning  
-When: Wednesday Nov 8th: 10am – 11 am, 11 am- 12 noon, or  12 noon- 1pm
+What: Session 4: Hands-on Learning   <br>
+When: Wednesday Nov 8th: 10am – 11 am, 11 am- 12 noon, or  12 noon- 1pm  <br>
 Where:  EMSL 1077, Breakout Room 2
 
 •	Nicole DiDonato | Chemist | EMSL
