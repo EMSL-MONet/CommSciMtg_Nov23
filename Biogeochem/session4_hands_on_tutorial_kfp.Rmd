@@ -20,7 +20,8 @@ These graphs were created for use in Session 4 (Biogeochemistry Hands-On Tutoria
 
 
 > **USING THIS TUTORIAL**  
-Download the [.Rmd file](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session4_hands_on_tutorial_kfp.Rmd) and the [data file](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_data.csv). 
+Download the [.Rmd file](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session4_hands_on_tutorial_kfp.Rmd) 
+and the [data file](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_data.csv). 
 Make sure both these files are saved in the same folder, to minimize errors with file paths.
 
 
