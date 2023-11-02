@@ -1,0 +1,247 @@
+---
+title: "Session 4: Biogeochemistry Hands-On Tutorial"
+author: Kaizad Patel
+output: html_document
+date: "2023-11-08"
+---
+
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+**MONet Community Science Meeting 2023**
+
+This RMarkdown document contains code and scripts for preliminary processing and data visualization of soil biogeochemistry data. 
+These graphs were created for use in Session 4 (Biogeochemistry Hands-On Tutorial) on Wednesday, November 8.
+
+
+> **USING THIS TUTORIAL**  
+Download the [.Rmd file]() and the [data file](). 
+Make sure both these files are saved in the same folder, to minimize errors with file paths.
+
+
+> This file is an RMarkdown (.Rmd) file. An advantage to RMarkdown is that you can combine text with code and coding outputs. You can use this file in two ways:  
+1. Run the code within each code chunk, which will generate the figures in the console.  
+2. Use the "Knit" button to generate a report (.html format) that will include the text, the code, and your output graphs. 
+
+
+---
+
+## Setup
+
+### Load packages
+
+You will need the `{tidyverse}` set of packages to run this tutorial. 
+The `tidyverse` includes packages like `{dplyr}` and `{tidyr}` for data wrangling, and `{ggplot2}` for data visualization.
+
+```{r packages}
+
+library(tidyverse) # for general data wrangling and visualization
+theme_set(theme_bw(base_size = 12)) # set default ggplot theme
+
+```
+
+You may also want to download additional packages to jazz up your figures, such as the `{soilpalettes}` package, which includes soil-themed color palettes.
+
+```{r}
+# Install `soilpalettes` using: 
+# install.packages("devtools"); devtools::install_github("kaizadp/soilpalettes")
+
+library(soilpalettes) # for color palettes
+```
+
+
+### Import files
+
+We need only one file for this tutorial. 
+This includes biogeochemical variables, and also has site metadata such as latitude-longitude and biome type.
+
+You will need to change the file path before using this tutorial. The current file path reflects the directory structure in the GitHub repository.  
+If you downloaded the tutorial and the data file into the same folder, change the code chunk below to `bgc_data = read_csv("bgc_data.csv")`
+
+
+```{r import_files}
+bgc_data = read_csv("Biogeochem/data/bgc_data.csv")
+```
+
+
+One additional processing step before we start the tutorial -- The `Location` column refers to the depth of the soil sample, "TOP" or "BTM".  
+By default, R sorts its data alphabetically. Change the order here, before proceeding. 
+
+
+```{r process}
+
+bgc_data = 
+  bgc_data %>% 
+  mutate(Location = factor(Location, levels = c("TOP", "BTM")))
+
+```
+
+Now, we begin with the plots and analyses. 
+
+Below are some examples with select variables. You can modify this code to try this with other variables of your choice.
+
+--- 
+
+## JITTER AND SCATTER PLOTS
+
+Scatter plots and jitter plots help with basic exploratory analysis.
+
+In jitter plots, the `geom_jitter` function adds a little bit of random noise to each data point, allowing some separation. This prevents overlapped points. 
+
+
+### JITTER PLOT: total carbon (TC) by depth
+
+```{r}
+
+bgc_data %>% 
+  ggplot(aes(x = Location, y = TC, color = Location))+
+  geom_jitter(size = 3, width = 0.3)
+
+```
+
+### JITTER + BOX PLOT: total carbon (TC) by depth
+
+Add another layer (boxplot) to the plot above.  
+This shows us summary stats (median and quartiles) in addition to the spread of the data. 
+
+```{r}
+
+bgc_data %>% 
+  ggplot(aes(x = Location, y = TC, color = Location))+
+  geom_boxplot(position = position_dodge(width = 0.5), 
+               width = 0.3, 
+               outlier.colour = NA, 
+               color = "black")+
+  geom_jitter(size = 3, width = 0.3)
+
+```
+
+
+### SCATTER PLOT: total carbon (TC) by biome
+
+The next example is one of total carbon (continuous variable) plotted against biome (character variable)
+
+```{r, fig.height=5, fig.width=9}
+
+bgc_data %>% 
+  ggplot(aes(x = biome_name, y = TC, color = Location))+
+  geom_point(size = 3, 
+             position = position_dodge(width = 0.5))
+
+```
+
+Because of the long biome names, the x-axis is difficult to read.  
+Try the `scale_x_discrete` command below to format the x-axis.
+
+```{r, fig.height=5, fig.width=9}
+
+bgc_data %>% 
+  ggplot(aes(x = biome_name, y = TC, color = Location))+
+  geom_point(size = 3, 
+             position = position_dodge(width = 0.5)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))+
+  labs(x = "")
+```
+
+
+
+## CORRELATION PLOTS
+
+Here is simple code to visualize correlations among variables. You can also do this in the [Shiny App]().
+
+```{r}
+
+bgc_data %>% 
+  ggplot(aes(x = TC, y = TN))+
+  geom_point()+
+  geom_smooth(method = "lm", se = F)
+
+```
+
+
+## MAPS
+
+The `{ggplot2}` package has functionality to easily plot maps (without downloading any other files or packages!).
+
+We will plot our data over a map of the USA.  
+To do so, first load the `states_map` file, which contains the data for the state outlines.  
+Then, plot the state boundaries using the `geom_polygon` function.
+
+```{r}
+states_map <- ggplot2::map_data("state")
+
+ggplot(states_map, aes(long, lat, group = group))+
+  geom_polygon(color = "grey", fill = NA)
+```
+
+Now, to plot our data over this map.  
+We add the `geom_point` layer over the base polygon layer of the states.
+
+```{r}
+ggplot(states_map, aes(long, lat, group = group))+
+  geom_polygon(color = "grey", fill = NA)+
+  geom_point(data = bgc_data, 
+             aes(x = Long, y = Lat, 
+                 fill = TC, group = 1), 
+             size = 6, shape = 21, color = "black")
+```
+
+
+The default `{ggplot2}` color palette may be difficult to interpret.  
+As an alternative, we use the `{soilpalettes}` package.  
+
+```{r}
+ggplot(states_map, aes(long, lat, group = group))+
+  geom_polygon(color = "grey", fill = NA)+
+  geom_point(data = bgc_data %>% filter(Location == "TOP"), 
+             aes(x = Long, y = Lat, color = TC, group = 1), 
+             size = 6)+
+  scale_color_gradientn(colors = soil_palette("redox2", 5))+
+  theme_void(base_size = 16)+
+  theme(legend.position = "bottom")
+```
+
+Another map example, showing the different biomes
+
+```{r, fig.height=7, fig.width=15}
+ggplot(states_map, aes(long, lat, group = group))+
+  geom_polygon(color = "grey", fill = NA)+
+  geom_point(data = bgc_data, 
+             aes(x = Long, y = Lat, 
+                 color = biome_name, group = 1), 
+             size = 6)+
+  scale_color_manual(values = soil_palette("redox2", 5))+
+  theme_void(base_size = 16)+
+  labs(fill = "")
+  
+```
+
+
+## ANOVA
+
+We can use analysis of variance (ANOVA) to determine the drivers of variation in our dataset.  
+In our current dataset, we have two categorical variables (Location and biome_name), which we will use as the explanatory variables.
+
+To generate the ANOVA table, we first run a linear model (`lm` function) and then the anova (`Anova` function). You will need the `{car}` package for this.
+
+```{r}
+
+l = lm(TC ~ Location * biome_name, data = bgc_data) 
+car::Anova(l)
+
+```
+
+
+--- 
+
+We encourage you to use the framework above to perform additional analyses on the dataset provided. What trends do you see in the data?  
+Some prompts:
+- what is the spatial distribution of [x]?
+- how does analyte [x] differ by depth or among biomes?
+- how well does analyte [x] correlate with analyte [y]?
+- choose a site; how do the data for that site compare to the others in that region/biome?
