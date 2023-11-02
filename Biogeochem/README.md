@@ -57,7 +57,7 @@ After completing these tutorials, you will be able to:
 ## Before The Day
 
 1. Install the MS Excel Solver add-in (see step 5 of the [tutorial](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Instructions%20for%20Respration%20Curve%20Fitting%20with%20Excel.docx)).
-2. Download the [respiration example](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/Respiration_Example.xlsx)
+2. Download the [respiration](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/Respiration_Raw_Data.xlsx) and [respiration example](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/Respiration_Example.xlsx)
 3. If you don't already have R/RStudio, please download and install here:
     - [R](https://cran.r-project.org/)
     -  [RStudio](https://posit.co/downloads/)
