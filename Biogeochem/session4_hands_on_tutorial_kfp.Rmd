@@ -20,7 +20,7 @@ These graphs were created for use in Session 4 (Biogeochemistry Hands-On Tutoria
 
 
 > **USING THIS TUTORIAL**  
-Download the [.Rmd file]() and the [data file](). 
+Download the [.Rmd file](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session4_hands_on_tutorial_kfp.Rmd) and the [data file](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_data.csv). 
 Make sure both these files are saved in the same folder, to minimize errors with file paths.
 
 
@@ -152,7 +152,7 @@ bgc_data %>%
 
 ## CORRELATION PLOTS
 
-Here is simple code to visualize correlations among variables. You can also do this in the [Shiny App]().
+Here is simple code to visualize correlations among variables. You can also do this in the [Shiny App](https://shinyproxy.emsl.pnnl.gov/app/1000soils).
 
 ```{r}
 
