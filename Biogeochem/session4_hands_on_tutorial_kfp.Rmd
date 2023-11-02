@@ -15,19 +15,17 @@ knitr::opts_chunk$set(echo = TRUE,
 
 **MONet Community Science Meeting 2023**
 
-This RMarkdown document contains code and scripts for preliminary processing and data visualization of soil biogeochemistry data. 
+This tutorial contains code and scripts for preliminary processing and data visualization of soil biogeochemistry data. 
 These graphs were created for use in Session 4 (Biogeochemistry Hands-On Tutorial) on Wednesday, November 8.
 
 
 > **USING THIS TUTORIAL**  
-Download the [.Rmd file](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session4_hands_on_tutorial_kfp.Rmd) 
-and the [data file](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_data.csv). 
+Download the [bgc_data file](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_data.csv). 
+Create a new R Script file and save it in the **same** folder as the data file. 
 Make sure both these files are saved in the same folder, to minimize errors with file paths.
 
 
-> This file is an RMarkdown (.Rmd) file. An advantage to RMarkdown is that you can combine text with code and coding outputs. You can use this file in two ways:  
-1. Run the code within each code chunk, which will generate the figures in the console.  
-2. Use the "Knit" button to generate a report (.html format) that will include the text, the code, and your output graphs. 
+> This file is a Markdown report, wich includes text as well as code chunks. You can copy the R code directly from these chunks and paste it into your R Script file. 
 
 
 ---
@@ -222,6 +220,7 @@ ggplot(states_map, aes(long, lat, group = group))+
   
 ```
 
+---
 
 ## ANOVA
 
@@ -241,7 +240,9 @@ car::Anova(l)
 --- 
 
 We encourage you to use the framework above to perform additional analyses on the dataset provided. What trends do you see in the data?  
-Some prompts:
+
+Some prompts:  
+
 - what is the spatial distribution of [x]?
 - how does analyte [x] differ by depth or among biomes?
 - how well does analyte [x] correlate with analyte [y]?
