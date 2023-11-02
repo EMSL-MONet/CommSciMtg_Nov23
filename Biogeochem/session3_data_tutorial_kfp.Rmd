@@ -207,9 +207,9 @@ We use the `ggcorrplot` package for this.
 # So, for an easier plot, subset select variables and then re-run the correlation matrix.
 
 data_wide_subset = data_wide %>% 
-  dplyr::select(Ca, Mg, Na, K, Bases, CEC, 
-                Sand, Silt, Clay, SO4S, NO3N, NH4N,
-                TC, TN, pH, Lat, Long, Location)
+  dplyr::select(Ca, Mg, CEC, 
+                Clay, SO4S, NH4N,
+                TC, TN, Location)
 
 fit_correlations_function(data_wide_subset %>% filter(Location == "TOP"))
 ```
@@ -581,3 +581,47 @@ make_map(data_wide %>% filter(Location == "BTM"), VAR = "CEC", LEGEND = "CEC (me
 make_map(data_wide %>% filter(Location == "TOP"), VAR = "Clay", LEGEND = "Clay (%)")
 
 ```
+
+
+---
+
+## TEXTURE
+
+```{r}
+plot_texture = function(texture_processed){
+
+  # plot the soil texture triangle
+  library(ggtern) 
+  data(USDA)
+  
+  gg_texture = 
+    ggtern(data = data_wide,
+           aes(x = Sand, y = Clay, z = Silt)) +
+    geom_polygon(data = USDA, 
+                 aes(x = Sand, y = Clay, z = Silt, group = Label),
+                 fill = NA, size = 0.3, alpha = 0.5, color = "grey30")+
+    geom_point(aes(fill = biome_name),
+               size = 4, color = "black", stroke = 1, shape = 21)+
+#    facet_wrap(~Location)+
+    theme_bw()+
+    theme_showarrows()+
+    theme_hidetitles()+
+    theme_clockwise() +
+      scale_fill_manual(values = soil_palette("redox2", 5))+
+      scale_shape_manual(values = c(21, 24))+
+    labs(fill = "")
+  
+  USDA_text <- 
+    USDA  %>% 
+    group_by(Label) %>%
+    summarise_if(is.numeric, mean, na.rm = TRUE) %>%
+    ungroup()
+  
+  #textures_names<-
+  gg_texture +
+    geom_text(data = USDA_text,
+              aes(x = Sand, y = Clay, z = Silt, label = Label),
+              size = 4, color = "black")
+}
+```
+
