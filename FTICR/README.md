@@ -15,13 +15,14 @@ This hands on session is intended to allow participants to become familiar with 
 
 ## Prerequistes
 Python install: https://www.python.org/downloads/  (Tested on version 3.11.3 and 3.10) <br>
-Jupyter notebook install: https://jupyter.org/install (Tested on version 6.5.4 and 7) <br>
+Jupyter notebook install: https://jupyter.org/install (Tested on version 6.5.4 and 7.0.6) <br>
 Libraries: <br>
-Seaborn (Tested on version 0.12.1) <br>
-Pandas (Tested on version 2.0.2) <br>
-Numpy (Tested on version 1.24.3) <br>
-Matplotlib (Tested on version 3.7.1) <br>
-Scipy (Tested on version 1.11.3) <br>
+Seaborn (Tested on version 0.12.1 and 0.12.2) <br>
+Pandas (Tested on version 2.0.2 and 1.5.3) <br>
+Numpy (Tested on version 1.24.3 and 1.24.4) <br>
+Matplotlib (Tested on version 3.7.1 and 3.7.3) <br>
+Scipy (Tested on version 1.11.3 and 1.10.1) <br>
+tqdm (Tested on version 4.64.1)<br>
 
 ## Data Access
 All the materials needed for the hands on session are located in this repository: https://github.com/EMSL-MONet/CommSciMtg_Nov23/tree/main/FTICR
