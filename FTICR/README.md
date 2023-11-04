@@ -48,9 +48,19 @@ jupyter notebook: https://jupyter.org/install  <br>
 "icr.reps.combined_v1_clean.csv" (1000Soils Pilot FT-ICR-MS data) <br>
 "Summary_Merged_ZenodoShinyAp.csv" (Summary file) <br>
 
-3. Run the test file script "HelloWorld_test.ipynb". This will import functions you will need during the hands on session.  <br>
+3.Open your command prompt and install the necessary libraries we will be using. For each library, type the following into the command prompt:
+
+pip install pandas 
+pip install seaborn
+pip install numpy as np
+pip install matplotlib 
+pip install scipy 
+pip install tqdm 
+
+4.Run the test file script "HelloWorld_test.ipynb". This will import functions you will need during the hands on session.  <br>
 If you have any trouble or do not see a “Congratulations, you are ready for the hands on session on Nov 8”, please
 contact Will Kew (william.kew@pnnl.gov) or Nicole DiDonato (nicole.didonato@pnnl.gov) with any issues or questions.
+
 ### On The Day
 Bring your computer.  <br>
 Have a python installed and jupyter notebook running. <br>
