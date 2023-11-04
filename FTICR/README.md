@@ -50,7 +50,7 @@ jupyter notebook: https://jupyter.org/install  <br>
 
 3. Run the test file script "HelloWorld_test.ipynb". This will import functions you will need during the hands on session.  <br>
 If you have any trouble or do not see a “Congratulations, you are ready for the hands on session on Nov 8”, please
-contact Will Kew (wkew@pnnl.gov) or Nicole DiDonato (nicole.didonato@pnnl.gov) with any issues or questions.
+contact Will Kew (william.kew@pnnl.gov) or Nicole DiDonato (nicole.didonato@pnnl.gov) with any issues or questions.
 ### On The Day
 Bring your computer.  <br>
 Have a python installed and jupyter notebook running. <br>
