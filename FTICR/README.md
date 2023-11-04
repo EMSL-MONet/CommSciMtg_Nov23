@@ -48,6 +48,13 @@ jupyter notebook: https://jupyter.org/install  <br>
 "icr.reps.combined_v1_clean.csv" (1000Soils Pilot FT-ICR-MS data) <br>
 "Summary_Merged_ZenodoShinyAp.csv" (Summary file) <br>
 
+3. Download the FTICRMS folder for this session from GitHUb including:  <br>
+•	Jupyter Notebook file: "MONet_HandsOnSession.ipynb" <br>
+•	Test file "HelloWorld_test.ipynb" <br>
+•	Datafiles:  <br>
+"icr.reps.combined_v1_clean.csv" (1000Soils Pilot FT-ICR-MS data) <br>
+"Summary_Merged_ZenodoShinyAp.csv" (Summary file) <br>
+
 3.Open your command prompt and install the necessary libraries we will be using. For each library, type the following into the command prompt:<br>
 
    pip install pandas <br>
