@@ -1,0 +1,407 @@
+---
+title: "MONet FT-ICR-MS Hands -on Session"
+output: html_document
+---
+This script will read in the molecular formula assignments from CoreMS and plot common figures.
+The data is from the 1000 Soils Pilot project and has been:
+
+* Formula assigned, filtered and aligned in Formularity format ('icr.reps.combined_v1.csv')
+* Summarized, averaged and merged with soil chemistry data ('Summary_Merged_ZenodoShinyAp.csv')
+
+The workflow here is split into two parts
+*Part 1* is a qualitative examination of peak-level data, where *Part 2* aggregates properties by sample and then compares to additional data in a more quantitative way.
+This is the 'extra-credit' part of the task\
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+
+# **Part 1: Qualitative Data Exploration at the Formula Level**
+
+## Loading Libraries
+```{r}
+library(ggplot2)
+library(dplyr)
+library(reshape2)
+```
+
+
+
+## Loading Data
+```{r}
+longform = read.csv("Longform_Formula_Level.csv")
+summaryfile = read.csv("Merged_SummaryFile_ZenodoShinyAp.csv")
+
+init_column = c(
+  'Molecular.Formula', 'C', 'H', 'O', 'N', #'C13', 
+                'S', 'P', #'Na',
+           'El_comp', 'Class',#'NeutralMass',
+                'Error_ppm', 
+                'Candidates', 'H.C','O.C'
+)
+
+El_comp_order = c("CHO", "CHON")
+
+# List and sort all of the unique Samples
+sample_list = unique(longform$Sample)
+sample_list = sort(sample_list)
+
+
+# List out Biomes
+biomes = c("Desert_Shrubland", "Medit_Woodlands", "Temp_Conif_Forests", "Temp_Forests", "Temp_Grasslands")
+```
+
+## Scatter Plot O/C and H/C 
+Sample: ANZA_BTM\
+Coloring: Class\
+```{r}
+data = filter(longform, Sample =="ANZA_BTM")
+ggplot(data = data, aes(x = O/C, y = H/C, color = Class)) + geom_point() + labs(title = "Sample: ANZA_BTM")
+```
+
+
+## Scatter Plot C and DBE
+Sample: ANZA_BTM\
+Coloring: Class\
+```{r}
+data = filter(longform, Sample =="ANZA_BTM")
+ggplot(data = data, aes(x = C, y = DBE, color = Class)) + geom_point() + labs(title = "Sample: ANZA_BTM")
+```
+
+
+## Scatter Plot C and Error_ppm 
+Sample: ANZA_BTM\
+Coloring: Class\
+```{r}
+data = filter(longform, Sample =="ANZA_BTM")
+ggplot(data = data, aes(x = C, y = Error_ppm, color = Class)) + geom_point() + labs(title = "Sample: ANZA_BTM")
+```
+
+
+## Scatter Plot O/C and H/C 
+Site: BLAN\
+Coloring: Class\
+```{r}
+data = filter(longform, Site =="BLAN")
+ggplot(data = data, aes(x = O/C, y = H/C, color = Class)) + geom_point() + labs(title = "Site: BLAN")
+```
+
+
+
+## Scatter Plot C and DBE
+Site: BLAN\
+Coloring: Class\
+```{r}
+data = filter(longform, Site =="BLAN")
+ggplot(data = data, aes(x = C, y = DBE, color = Class)) + geom_point() + labs(title = "Site: BLAN")
+```
+
+
+
+## Scatter Plot C and Error_ppm 
+Site BLAN\
+Coloring: Class\
+```{r}
+data = filter(longform, Site =="BLAN")
+ggplot(data = data, aes(x = C, y = Error_ppm, color = Class)) + geom_point() + labs(title = "Site: BLAN")
+```
+
+
+
+## Scatter Plot O/C and H/C 
+Depth: TOP\
+Coloring: Class\
+```{r}
+data = filter(longform, Depth =="TOP")
+ggplot(data = data, aes(x = O/C, y = H/C, color = Class)) + geom_point() + labs(title = "Depth: TOP")
+```
+
+
+## Scatter Plot C and DBE 
+Depth: TOP\
+Coloring: Class\
+```{r}
+data = filter(longform, Depth =="TOP")
+ggplot(data = data, aes(x = C, y = DBE, color = Class)) + geom_point() + labs(title = "Depth: TOP")
+```
+
+
+## Scatter Plot C and Error_ppm
+Depth: TOP\
+Coloring: Class\
+```{r}
+data = filter(longform, Depth =="TOP")
+ggplot(data = data, aes(x = C, y = Error_ppm, color = Class)) + geom_point() + labs(title = "Depth: TOP")
+```
+
+
+
+## Scatter Plot O/C and H/C 
+BiomeType: Temp_Forests\
+Coloring by Class\
+```{r}
+data = filter(longform, BiomeType == "Temp_Forests")
+ggplot(data = data, aes(x = O/C, y = H/C, color = Depth)) + geom_point() + labs(title = "BiomeType: Temp_Forests")
+```
+
+
+## Scatter Plot C and DBE 
+Coloring: Class\
+BiomeType: Temp_Forests\
+```{r}
+data = filter(longform, BiomeType == "Temp_Forests")
+ggplot(data = data, aes(x = C, y = DBE, color = Class)) + geom_point() + labs(title = "BiomeType: Temp_Forests")
+```
+
+
+
+## Scatter Plot C and Errpr_ppm 
+Coloring: Class\
+BiomeType: Temp_Forests\
+```{r}
+data = filter(longform, BiomeType == "Temp_Forests")
+ggplot(data = data, aes(x = C, y = Error_ppm, color = Class)) + geom_point() + labs(title = "BiomeType: Temp_Forests")
+```
+
+
+## Panel of Scatter Plots O/C and H/C '
+BiomeType: Temp_Forests\
+Coloring: Class\
+Panels by Site\
+```{r}
+data = filter(longform, BiomeType == "Temp_Grasslands")
+ggplot(data = data, aes(x = O/C, y = H/C, color = El_comp)) + geom_point() + labs(title = "BiomeType: Temp_Grasslands") + facet_wrap(~Site, ncol=5)
+```
+
+
+
+
+# **Part 2: Quantitative Comparison of Summed Formulas and Averaged Calculated Properties**
+
+## Creating the data
+```{R}
+data = subset(summaryfile, select = c("ID", "BiomeType", "Site", "Depth", "CHO", "CHON"))
+columns = c("ID", "BiomeType", "Site", "Depth")
+value_vars = c("CHO", "CHON")
+melt_data = melt(data, id=columns, variable.name = "El_comp", value.name = "El_comp_percent")
+
+classes = c("Lignin", "Lipid", "ConHC", "Carb", "AminoSugar", "Tannin", "Protein", "UnsatHC", "Other")
+class_data <- subset(summaryfile, select = c("ID", "BiomeType", "Site", "Depth" , "Assignments", classes))
+melt_Classes = melt(class_data, id=c(columns, "Assignments"), variable.name = "Class", value.name = "Class_Value")
+
+Biomes = c("Desert_Shrubland", "Temp_Forests", "Temp_Conif_Forests", "Temp_Grasslands", "Medit_Woodlands")
+```
+
+
+
+## Barplot for Site and Assignments
+Site: RMNP\
+Filling: Depth\
+```{R}
+data = filter(summaryfile, Site == "RMNP")
+ggplot(data = data, aes(x = Site, y = Assignments, fill= factor(Depth, levels = c("TOP", "BTM")))) + geom_bar(stat = "identity", position = position_dodge()) + scale_y_continuous(breaks = c(0,2000,4000,6000,8000)) + labs(fill="Depth")
+```
+
+
+## Assignmnets for Site and Assignments
+BiomeType: Temp_Grasslands\
+Filling: Depth\
+```{R}
+data = filter(summaryfile, BiomeType == "Temp_Grasslands")
+ggplot(data = data, aes(x = Site, y = Assignments, fill= Depth)) + geom_bar(stat = "identity", position = position_dodge()) + scale_y_continuous(breaks = c(0,2000,4000,6000,8000)) + labs(fill="Depth")  + theme(axis.text.x = element_text(angle = 90))
+```
+
+
+## Barplot for Site and NOSC_Mean
+Site: CFS1\
+Filling: Depth\
+```{R}
+data = filter(summaryfile, Site == "CFS1")
+ggplot(data = data, aes(x = Site, y = NOSC_Mean, fill= factor(Depth, levels = c("TOP", "BTM")))) + geom_bar(stat = "identity", position = position_dodge())  + labs(fill="Depth")
+```
+
+
+## Barplot for Site and NOSC_Mean
+Filling: Depth\
+```{R}
+ggplot(data = summaryfile, aes(x = Site, y = NOSC_Mean, fill= factor(Depth, levels = c("TOP", "BTM")))) + geom_bar(stat = "identity", position = position_dodge())  + labs(fill="Depth") + theme(axis.text.x = element_text(angle = 90))
+```
+
+
+## Barplot for Site and NOSC_Mean
+BiomeType: Temp_Forests\
+Filling: Depth\
+```{R}
+data = filter(summaryfile, BiomeType == "Temp_Forests")
+ggplot(data = data, aes(x = Site, y = NOSC_Mean, fill= factor(Depth, levels = c("TOP", "BTM")))) + geom_bar(stat = "identity", position = position_dodge())  + labs(fill="Depth") + theme(axis.text.x = element_text(angle = 90))
+```
+
+
+
+## Barplot for Site and AImod_Mean
+Site: CFS1\
+Filling: Depth\
+```{R}
+data = filter(summaryfile, Site == "CFS1")
+ggplot(data = data, aes(x = Site, y = AImod_Mean, fill= factor(Depth, levels = c("TOP", "BTM")))) + geom_bar(stat = "identity", position = position_dodge())  + labs(fill="Depth")
+```
+
+
+
+## Barplot for Site and AI_Mean
+Site: CFS1\
+Filling: Depth\
+```{R}
+data = filter(summaryfile, Site == "CFS1")
+ggplot(data = data, aes(x = Site, y = AI_Mean, fill= factor(Depth, levels = c("TOP", "BTM")))) + geom_bar(stat = "identity", position = position_dodge())  + labs(fill="Depth")
+```
+
+
+## Barplot for Site and AI_Mean
+BiomeType: Temp_Forests\
+Filling: Depth\
+```{R}
+data = filter(summaryfile, BiomeType == "Temp_Forests")
+ggplot(data = data, aes(x = Site, y = AI_Mean, fill= factor(Depth, levels = c("TOP", "BTM")))) + geom_bar(stat = "identity", position = position_dodge())  + labs(fill="Depth") + theme(axis.text.x = element_text(angle = 90))
+```
+
+
+
+## Barplot for Site and DBE_Mean
+Site: CFS1\
+Filling: Depth\
+```{R}
+data = filter(summaryfile, Site == "CFS1")
+ggplot(data = data, aes(x = Site, y = DBE_Mean, fill= factor(Depth, levels = c("TOP", "BTM")))) + geom_bar(stat = "identity", position = position_dodge())  + labs(fill="Depth")
+```
+
+
+## Barplot for Site and DBE_Mean
+Depth: TOP\
+Filling: Depth\
+```{R}
+data = filter(summaryfile, Depth == "TOP")
+ggplot(data = data, aes(x = Site, y = DBE_Mean, fill= factor(Depth, levels = c("TOP", "BTM")))) + geom_bar(stat = "identity", position = position_dodge())  + labs(fill="Depth") + theme(axis.text.x = element_text(angle = 90))
+```
+
+
+
+## Barplot for Site and DBE_Mean
+BiomeType: Temp_Forests\
+Filling: Depth\
+```{R}
+data = filter(summaryfile, BiomeType == "Temp_Forests")
+ggplot(data = data, aes(x = Site, y = DBE_Mean, fill= factor(Depth, levels = c("TOP", "BTM")))) + geom_bar(stat = "identity", position = position_dodge())  + labs(fill="Depth") + theme(axis.text.x = element_text(angle = 90))
+```
+
+
+## Boxplot for BiomeType and NOSC_Mean
+BiomeType: All biomes\
+Filling: Depth\
+```{R}
+data = filter(summaryfile, BiomeType %in% Biomes)
+ggplot(data = data, aes(x = factor(BiomeType, levels = Biomes), y = NOSC_Mean, fill= factor(Depth, levels = c("TOP", "BTM")))) + geom_boxplot() + labs(x="BiomeType",title = "BiomeType",fill="Depth") + theme(axis.text.x = element_text(angle = 90))
+```
+
+
+
+
+## Boxplot for Assignments and Mean_Error_PPM
+Filling: Depth\
+```{r echo=FALSE}
+ggplot(data = summaryfile, aes(x = Assignments, y = Mean_Error_PPM, fill = Depth)) + geom_boxplot() + labs(title = "Site: All Sites") 
+
+```
+
+
+
+
+## Barplot for Site and Assignments
+BiomeType: Temp_Forests\
+Filling: Depth\
+```{r echo=FALSE}
+Class1 = melt_Classes %>% dplyr::group_by(Class, Site) %>% dplyr::summarise(Mean_Fraction=mean(Class_Value), SE=sd(Class_Value)/sqrt(length(Class_Value))) %>% filter(Site == "CFS1")
+
+ggplot(data = Class1, aes(x = Class, y = Mean_Fraction, fill = Class)) + geom_bar(stat = "identity", position = position_dodge())  + labs(title = "All Biomes") + theme(axis.text.x = element_text(angle = 90)) + geom_errorbar(aes(x = Class, ymin= Mean_Fraction - SE, ymax = Mean_Fraction + SE))
+
+```
+
+
+
+## Barplot for Class and Mean_Fraction
+BiomeType: Temp_Forests\
+Filling: Class\
+```{r echo=FALSE}
+Class1 = melt_Classes %>% dplyr::group_by(Class, Site, BiomeType, Assignments) %>% dplyr::summarise(Mean_Fraction=mean(Class_Value), SE=sd(Class_Value)/sqrt(length(Class_Value)), Assignments=Assignments) %>% filter(BiomeType == "Temp_Conif_Forests")
+
+ggplot(data = Class1, aes(x = Class, y = Mean_Fraction, fill = Class)) + geom_bar(stat = "identity", position = position_dodge())  + labs(title = "All Biomes") + theme(axis.text.x = element_text(angle = 90)) + facet_wrap(~Site) + geom_errorbar(aes(x = Class, ymin = Mean_Fraction - SE, ymax = Mean_Fraction + SE))
+
+```
+
+
+
+
+## Barplot for Class and Mean_Fraction
+BiomeType: Temp_Forests\
+Filling: Depth\
+```{r echo=FALSE}
+Class1 = melt_Classes %>% dplyr::group_by(Class, Site, Depth) %>% dplyr::summarise(Mean_Fraction=mean(Class_Value), SE=sd(Class_Value)/sqrt(length(Class_Value))) %>% filter(Site == "CFS1")
+
+ggplot(data = Class1, aes(x = Class, y = Mean_Fraction, fill = Class)) + geom_bar(stat = "identity", position = position_dodge())  + labs(title = "All Biomes") + theme(axis.text.x = element_text(angle = 90)) + facet_wrap(~factor(Depth, levels = c("TOP", "BTM"))) 
+
+```
+
+
+
+
+## Barplot for BiomeType and Mean_Fraction
+BiomeType: Temp_Forests\
+Filling: Depth\
+```{r echo=FALSE}
+El_comp_data = melt_data %>% dplyr::group_by(El_comp, BiomeType) %>% dplyr::summarise(Mean_Fraction=mean(El_comp_percent), SE=sd(El_comp_percent)/sqrt(length(El_comp_percent))) %>% dplyr::filter(BiomeType != "None") %>% filter( BiomeType %in% biomes)
+
+ggplot(data = El_comp_data, aes(x = BiomeType, y = Mean_Fraction, fill = El_comp)) + geom_bar(stat = "identity", position = position_dodge())  + labs(title = "All Biomes") + theme(axis.text.x = element_text(angle = 90))
+
+```
+
+
+
+
+## Barplot for Site and Mean_Fraction
+BiomeType: Temp_Forests\
+Filling: Depth\
+```{r echo=FALSE}
+El_comp_data = melt_data %>% dplyr::group_by(El_comp, BiomeType, Depth, Site) %>% dplyr::summarise(Mean_Fraction=mean(El_comp_percent), SE=sd(El_comp_percent)/sqrt(length(El_comp_percent))) %>% dplyr::filter(BiomeType != "None") %>% filter( BiomeType %in% biomes)
+
+data = filter(El_comp_data, Site == "CFS1")
+ggplot(data = data, aes(x = Site, y = Mean_Fraction, fill = El_comp)) + geom_bar(stat = "identity", position = position_dodge())  + labs(title = "All Biomes") + theme(axis.text.x = element_text(angle = 90)) + facet_wrap(~Depth)
+```
+
+
+
+
+## Barplot for Site and Mean_Fraction
+BiomeType: Temp_Forests\
+Filling: Depth\
+```{r echo=FALSE}
+El_comp_data = melt_data %>% dplyr::group_by(El_comp, BiomeType, Depth, Site) %>% dplyr::summarise(Mean_Fraction=mean(El_comp_percent), SE=sd(El_comp_percent)/sqrt(length(El_comp_percent))) %>% dplyr::filter(BiomeType != "None") %>% filter( BiomeType %in% biomes)
+
+data = filter(El_comp_data, Site == "CFS1" & Depth == "TOP")
+ggplot(data = data, aes(x = Site, y = Mean_Fraction, fill = El_comp)) + geom_bar(stat = "identity", position = position_dodge())  + labs(title = "All Biomes") + theme(axis.text.x = element_text(angle = 90)) + facet_wrap(~Depth)
+```
+
+
+
+
+## Boxplot for BiomeType and Mean_Error_PPM
+Depth: TOP\
+BiomeType: All biomes\
+Filling: BiomeType\
+```{r echo=FALSE}
+data = filter(summaryfile, Depth == "TOP" & BiomeType %in% biomes)
+ggplot(data = data, aes(x = BiomeType ,y=Mean_Error_PPM, fill=BiomeType)) + geom_boxplot() + labs(title = "Depth: TOP")  + theme(axis.text.x = element_text(angle = 90))
+
+```

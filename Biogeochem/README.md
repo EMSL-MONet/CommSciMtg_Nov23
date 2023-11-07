@@ -1,7 +1,7 @@
 Biogeochemistry and Respiration
 ================
 
-## Know Before You Go
+### Know Before You Go
 
 The data and scripts in this directory will be used for the following sessions:
 - Tues, Nov 7: Session 3 Data Tutorial 1 (Exploring Soil Biogeochemistry & Respiration Data)
@@ -11,21 +11,9 @@ The data and scripts in this directory will be used for the following sessions:
 We have a Shiny App for quick and easy exploration of the data discussed here. 
 The App can be accessed [here](https://shinyproxy.emsl.pnnl.gov/app/1000soils).
 
+---
 
-## Prerequistes for Session 4
-
-- The _respiration_ demonstration and tutorial (link [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Instructions%20for%20Respration%20Curve%20Fitting%20with%20Excel.docx))
-will be conducted using Microsoft Excel. Users will need to install the **Solver add-in** before the meeting;
-install instructions are provided in step 5 of the tutorial. 
-
-- The _biogeochemistry_ demonstration and tutorial (link [here]()) will be conducted using R,
-but users can use Microsoft Excel if they prefer. Users must download [R](https://cran.r-project.org/)
-and [RStudio](https://posit.co/downloads/) before the meeting.
-The tutorial contains scripts that use `{tidyverse}`;
-users must download and install the necessary packages prior to the session.
-
-
-## Data Access
+### Data Access
 
 Data for this tutorial can be found in the `Biogeochem/data` subdirectory of this repository. 
 Follow the links below and click the “download raw data” button.
@@ -35,76 +23,54 @@ Follow the links below and click the “download raw data” button.
 
 file links:
 
-- [respiration](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/Respiration_Raw_Data.csv)
+- [respiration](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/Respiration_Raw_Data.xlsx)
 - [chemistry and
   physics](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_data.csv)
 - [site
   metadata](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_metadata.csv)
 
+---
 
-## Workshop Session: Session 3
-### Learning Objective
-- Demonstrate the functionality of the Shiny App.
-- Understand how to explore the biogeochemistry data.
-- Understand how to transfer respiration data from raw to processed data and how to plot and fit respiration data.
+### Prerequistes for Session 4
 
-### Agenda
-1-2 p.m on Tuesday, November 7, 2023
+- The _respiration_ demonstration and tutorial (link [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Instructions%20for%20Respration%20Curve%20Fitting%20with%20Excel.docx))
+will be conducted using Microsoft Excel. Users will need to install the **Solver add-in** before the meeting;
+install instructions are provided in step 5 of the tutorial. 
 
-  • 5 mins: Overview of MONet Shiny App (Qian)
-  
-    o Introduce the background and purpose of the App.
-    
-    o Show the list of biogeochemical data used in the App.
+- The _biogeochemistry_ demonstration and tutorial (link [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session4_hands_on_tutorial_kfp.html)) will be conducted using R,
+but users can use Microsoft Excel if they prefer. Users must download [R](https://cran.r-project.org/)
+and [RStudio](https://posit.co/downloads/) before the meeting.
+  - Download the [bgc_data](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_data.csv) file to your computer.
+  - Download the [Session4 Biogeochemistry tutorial](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session4_hands_on_tutorial_kfp.html) to your computer.
+    This is an .html file. Double-click the file to open it in your browser and load the tutorial.
+  - The tutorial contains scripts that use `{tidyverse}`; users must download and install the necessary packages prior to the session.
 
-  • 25 mins: Go over details in MONet Shiny App Visualization Tool (Layton)
-  
-    o Show each functions in the app.
+---
 
-  • 15 mins: Exploring Soil Biogeochemistry data by using the Shiny App (Kaizad)
+### Learning Objectives
+After completing these tutorials, you will be able to:
+- navigate the 1000 Soils Shiny App
+- explore and visualize the biogeochemistry data
+- process respiration data amd plot/fit these data 
 
-    o Show hypothesis driven correlations.
+--- 
+## Before The Day
 
-  • 15 mins: Exploring MONet Respiration data (Qian)
-  
-    o Introduce respirometer and protocol.
-    
-    o Show data processing from raw to processed data.
-    
-    o Fit respiration curve and compare fitting parameters between samples.
-
-## Workshop Session: Session 4 (hands on session)
-### Learning Objective
-- Demonstrate patterns and correlations among biogeochemical variables.
-- Understand how to transfer respiration data from raw to processed data.
-- Plot respiration data and conduct non-linear fitting.
-- Correlate fitting parameters of respiration data with other metadata of the samples. 
-
-### Agenda
-
-10am, 11am, noon (three 1-hour session) on Wednesday, November 8, 2023
-
-  •10 mins: Intro to the session (Whole group)
-  
-    o Introduce two sections (biogeochemistry data and respiration data)
-    
-    o Set up guidelines and show data and examples.
-    
-  •30 mins: Students Explore Data (Three teams)
-
-    o Use a subset of data to explore biogeochemistry and respiration.
-    
-  •10 mins: Feedbacks and Discussion (Whole group)
-
-    o 2 or 3 students share their findings
-    
-  •5 mins: Recap and Q&A
-
-
+1. Install the MS Excel Solver add-in (see step 5 of the [tutorial](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/Instructions%20for%20Respration%20Curve%20Fitting%20with%20Excel.docx)).
+2. Download the [respiration raw data](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/Respiration_Raw_Data.xlsx) and [respiration example](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/Respiration_Example.xlsx)
+3. If you don't already have R/RStudio, please download and install here:
+    - [R](https://cran.r-project.org/)
+    -  [RStudio](https://posit.co/downloads/)
+4. Download the [bgc_data](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_data.csv) file to your computer.
+5. Download the [Session4 Biogeochemistry tutorial](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session4_hands_on_tutorial_kfp.html) to your computer.
+    This is an .html file. Double-click the file to open it in your browser and load the tutorial.
+    - The tutorial contains scripts that use `{tidyverse}`; users must download and install the necessary packages prior to the session.
 
 
 ## On The Day
-
-[respiration example](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/Respiration_Example.xlsx)
+- Bring your computer.
+- Have MS Excel and R + RStudio installed and running.
+- Have datafiles downloaded in a known location on your computer.
+- Be ready to learn, network and have fun!
 
 
