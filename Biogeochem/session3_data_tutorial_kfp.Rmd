@@ -17,52 +17,96 @@ This RMarkdown document contains code and scripts for preliminary processing and
 These graphs were created for use in Session 3 (Biogeochemistry Data Tutorial) on Tuesday, November 7.
 
 
+> **USING THIS TUTORIAL**  
+Download the [bgc_data file](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_data.csv) and [bgc_analyses file](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_analyses.csv). 
+Create a new R Script file and save it in the **same** folder as the data files. 
+Make sure all these files are saved in the same folder, to minimize errors with file paths.
+
+
+> This file is a Markdown report, which includes text as well as code chunks. You can copy the R code directly from these chunks and paste it into your R Script file. 
+
+
+---
+
 ## Setup
 
-Load packages
+### Load packages
+
+You will need the `{tidyverse}` set of packages to run this tutorial. 
+The `tidyverse` includes packages like `{dplyr}` and `{tidyr}` for data wrangling, and `{ggplot2}` for data visualization.
 
 ```{r packages}
-library(tidyverse) # for general data wrangling and visualization
-library(maptools); library(sf) # for maps
-library(ggthemes) # for theme_map
-library(ggcorrplot) # to plot correlation matrix
-library(soilpalettes) # for color palettes
-# Install `soilpalettes` using: install.packages("devtools"); devtools::install_github("kaizadp/soilpalettes")
 
+library(tidyverse) # for general data wrangling and visualization
 theme_set(theme_bw(base_size = 12)) # set default ggplot theme
+
+
+library(ggcorrplot) # for correlation matrix plot
+library(ggtern) # for soil texture triangle (ternary plot) 
+
 ```
 
-Import files
+You may also want to download additional packages to jazz up your figures, such as the `{soilpalettes}` package, which includes soil-themed color palettes.
+
+```{r}
+# Install `soilpalettes` using: 
+# install.packages("devtools"); devtools::install_github("kaizadp/soilpalettes")
+
+library(soilpalettes) # for color palettes
+```
+
+
+### Import files
+
+We need two files for this tutorial. 
+`bgc_data` includes biogeochemical variables, and also has site metadata such as latitude-longitude and biome type. `bgc_analyses` includes additional information about the analyses performed.
+
+You will need to change the file path before using this tutorial. The current file path reflects the directory structure in the GitHub repository.  
+If you downloaded the tutorial and the data file into the same folder, change the code chunk below to `bgc_data = read_csv("bgc_data.csv")` and ``bgc_analyses = read_csv("bgc_data.csv") %>% ...`
+
 
 ```{r import_files}
 bgc_data = read_csv("Biogeochem/data/bgc_data.csv")
-metadata = read_csv("Biogeochem/data/bgc_metadata.csv")
-bgc_analyses = read_csv("Biogeochem/data/bgc_analyses.csv") %>% dplyr::select(column, abbreviated, analysis_type)
+bgc_analyses = read_csv("Biogeochem/data/bgc_analyses.csv") %>% dplyr::select(analysis, analysis_type)
 ```
 
-Process the data. We will use the data in two forms - longform and wideform.
 
-```{r process}
+### Process the data
+
+We will use the data in two forms - wideform (`bgc_data` is already in wideform, with each analyte as a separate column) and longform (see below).
+
+```{r long}
 data_long = 
   bgc_data %>% 
-  pivot_longer(cols = -c(Site_Code, Location), names_to = "column") %>% 
-  left_join(bgc_analyses) %>% 
-  left_join(metadata %>% dplyr::select(Site_Code, Lat, Long, biome_name))
+  pivot_longer(cols = -c(Site_Code, Location, Lat, Long, biome_name), 
+               names_to = "analysis") %>% 
+  left_join(bgc_analyses)
 
-data_wide = 
-  data_long %>% 
-  dplyr::select(-c(column, analysis_type)) %>% 
-  pivot_wider(names_from = "abbreviated", values_from = "value") %>% 
-  mutate(Location = factor(Location, levels = c("TOP", "BTM")))
 ```
+
+
+One additional processing step before we start the tutorial -- The `Location` column refers to the depth of the soil sample, "TOP" or "BTM".  
+By default, R sorts its data alphabetically. Change the order here, before proceeding. 
+
+
+```{r process}
+
+bgc_data = 
+  bgc_data %>% 
+  mutate(Location = factor(Location, levels = c("TOP", "BTM")))
+
+```
+
 
 --- 
 
 ## BASIC EXPLORATION
 
+Basic jitter plots to determine the range and distribution of each variable. Grouped by analysis type.
+
 ```{r jitters, fig.height=10, fig.width=12}
 data_long %>% 
-  ggplot(aes(x = abbreviated, y = value, color = Location))+
+  ggplot(aes(x = analysis, y = value, color = Location))+
   geom_jitter(width = 0.3)+
   facet_wrap(~analysis_type, scales = "free")+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
@@ -100,72 +144,16 @@ biome_numbers %>%
         panel.border = element_rect(fill = NA, color = "black"))
 ```
 
-```{r biomes_map_function}
-# biome map
-
-make_map_biome = function(bgc_wide, VAR, TITLE = "", LEGEND = VAR){
-  
-  ## Set CRS
-  common_crs <- 4326
-  
-  ## Set map size and point size
-  point_size <- 2
-  map_width = 9
-  map_height = 6
-  
-  # Set up map layers for plotting
-  
-  ## Make US states map cropped to contiguous region
-  us <- read_sf("Biogeochem/cb_2018_us_state_5m/cb_2018_us_state_5m.shp") %>% 
-    st_transform(., crs = common_crs) 
-  
-  us_bbox <- c(xmin = -125, xmax = -60, ymin = 20, ymax = 50)
-  region <- st_crop(us, y = us_bbox)
-  
-  # make a dataset merging metadata with site lat-longs
-  df_map <- 
-    bgc_wide %>% 
-    filter(!is.na(Lat) & !is.na(Long)) %>% 
-    st_as_sf(., coords = c("Long", "Lat"), crs = common_crs)
-  
-  # Make the base map with all sites
-  ## base_plot <- 
-  ggplot() + 
-    geom_sf(data = region, fill = "white", color = "grey70") + 
-    geom_sf(data = df_map, aes_string(fill = VAR), size = 7, shape = 21, color = "black", stroke = 1) + 
-    labs(title = TITLE,
-         fill = LEGEND)+
-    ggthemes::theme_map() + 
-    theme(legend.background = element_rect(fill = alpha("white", 0.0)), 
-          legend.key = element_rect(fill = "transparent"), 
-          legend.key.size = unit(1, "cm"),
-          legend.text = element_text(size = 12),
-          legend.title = element_text(size = 12, face = "bold", vjust = 0.7),
-          legend.position = "right",
-          plot.title = element_text(size = 14, face = "bold"),
-          plot.background = element_rect(color = "black", fill = NA, linewidth = 1)) + 
-#    scale_color_viridis_c(option = "plasma") +
-    scale_fill_manual(values = soilpalettes::soil_palette("redox2", 5))+
- NULL
-  
-}
-
-```
-
-```{r, fig.height=7, fig.width=13}
-
-make_map_biome(data_wide, VAR = "biome_name")
-
-```
 
 
 ---
 
-## CORRELATIONS AND PCAs
-
+## CORRELATIONS
 
 Use this function to set up the correlation plots for the entire dataset.  
 We use the `ggcorrplot` package for this.
+
+Creating a correlation matrix plot can be complicated. We have simplified this by making a custom function `fit_correlations_function`. This bundles all the processing/calculation steps into a neat function, which you can then run below.
 
 ```{r correlations_function}
 
@@ -199,89 +187,30 @@ We use the `ggcorrplot` package for this.
 
 ```
 
+Now, apply the `fit_correlations_function` function to the dataset to generate the correlation plot.
+
 ```{r correlation_matrix}
 # this will generate a correlation matrix for the entire BGC dataset
-  corr_all = fit_correlations_function(data_wide %>% dplyr::select(-Lat, -Long, -GWC))
+  corr_all = fit_correlations_function(bgc_data %>% dplyr::select(-Lat, -Long, -GWC))
 
 # However, there are a lot of variables here. 
 # So, for an easier plot, subset select variables and then re-run the correlation matrix.
 
-data_wide_subset = data_wide %>% 
+data_subset = bgc_data %>% 
   dplyr::select(Ca, Mg, CEC, 
                 Clay, SO4S, NH4N,
                 TC, TN, Location)
 
-fit_correlations_function(data_wide_subset %>% filter(Location == "TOP"))
+fit_correlations_function(data_subset %>% filter(Location == "TOP"))
 ```
-
-
-```{r pca_function, eval=FALSE, echo=FALSE}
-
-compute_pca = function(bgc_wide){
-  library(ggbiplot)
-  
-
-  fit_pca_function = function(dat){
-    
-    dat %>% 
-      drop_na()
-    
-    num = 
-      dat %>%       
-      dplyr::select(where(is.numeric)) %>%
-      dplyr::mutate(row = row_number()) %>% 
-      drop_na()
-    
-    num_row_numbers = num %>% dplyr::select(row)
-    
-    grp = 
-      dat %>% 
-      dplyr::select(where(is.character)) %>% 
-      dplyr::mutate(row = row_number()) %>% 
-      right_join(num_row_numbers)
-    
-    
-    num = num %>% dplyr::select(-row)
-    pca_int = prcomp(num, scale. = T)
-    
-    list(num = num,
-         grp = grp,
-         pca_int = pca_int)
-  }
-  
-  ## PCA input files ----
-  pca_overall = fit_pca_function(bgc_wide %>% dplyr::select(-GWC)) 
-  
-  ## PCA plots overall ----
-  gg_pca_overall = 
-    ggbiplot(pca_overall$pca_int, obs.scale = 1, var.scale = 1,
-             groups = as.character(pca_overall$grp$biome_name), 
-             ellipse = TRUE, circle = FALSE, var.axes = TRUE, alpha = 0) +
-    geom_point(size = 4, stroke = 1.5, alpha = 0.8,
-               aes(shape = pca_overall$grp$Location,
-                   color = groups))+ 
-    scale_shape_manual(values = c(1, 16))+
-    labs(shape="",
-         color = "",
-         title = "Overall PCA",
-         subtitle = "")+
-    NULL
-  
-  gg_pca_overall
-  
-}
-
-```
-
-```{r pca, fig.height=10, fig.width=12, eval=FALSE, echo=FALSE}
-compute_pca(data_wide)
-```
-
 
 **Individual Correlations**
+
+Here is simple code to visualize correlations among variables. You can also do this in the [Shiny App](https://shinyproxy.emsl.pnnl.gov/app/1000soils).
+
 ```{r correlations_individual}
 
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = TC, y = TN))+
   geom_point()+
   geom_smooth(method = "lm", se = F)+
@@ -289,7 +218,7 @@ data_wide %>%
        y = "Total N (%)")
 
 
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = Clay, y = Sand))+
   geom_point()+
   geom_smooth(method = "lm", se = F)+
@@ -297,7 +226,7 @@ data_wide %>%
        y = "Sand (%)")
 
 
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(y = CEC, x = Clay))+
   geom_point()+
   geom_smooth(method = "lm", se = F)+
@@ -305,7 +234,7 @@ data_wide %>%
        x = "Clay (%)")
 
 
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = Ca, y = Bases))+
   geom_point()+
   geom_smooth(method = "lm", se = F)+
@@ -314,44 +243,12 @@ data_wide %>%
 
 
 
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = TC, y = WEOC))+
   geom_point()+
   geom_smooth(method = "lm", se = F)+
   labs(x = "Total carbon (%)",
        y = "Water-extractable organic carbon (mg/g)")
-
-```
-
-```{r, eval=FALSE, echo=FALSE}
-## additional correlations
-
-x = 
-  data_wide %>% dplyr::select(GWC, Ca, Mg, Na, K, Bases, CEC, Sand, Silt, Clay, SO4S, NO3N, NH4N,
-                                                 TC, TN, pH, Location, biome_name, Site_Code)
-
-
-
-x_long = x %>% pivot_longer(cols = -c(Site_Code, Location, biome_name, GWC))
-x_long %>% 
-  ggplot(aes(x = GWC, y = value))+
-  geom_point()+
-  facet_wrap(~name, scales = "free_y")
-
-
-x_long = x %>% pivot_longer(cols = -c(Site_Code, Location, biome_name, pH))
-x_long %>% 
-  ggplot(aes(x = pH, y = value))+
-  geom_point()+
-  facet_wrap(~name, scales = "free_y")
-
-
-x_long = x %>% pivot_longer(cols = -c(Site_Code, Location, biome_name, Clay))
-x_long %>% 
-  ggplot(aes(x = Clay, y = value))+
-  geom_point()+
-  facet_wrap(~name, scales = "free_y")
-
 
 ```
 
@@ -369,7 +266,7 @@ TC ANOVA
 
 ```{r}
 
-lm((TC) ~ Location * biome_name, data = data_wide) %>% car::Anova()
+lm((TC) ~ Location * biome_name, data = bgc_data) %>% car::Anova()
 
 ```
 
@@ -378,7 +275,7 @@ plot TC by depth
 
 ```{r}
 
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = Location, y = TC, color = Location))+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3, outlier.colour = NA)+
   geom_jitter(size = 3, width = 0.3)
@@ -388,12 +285,10 @@ data_wide %>%
 plot TC by biome
 
 ```{r, fig.height=5, fig.width=9}
-set.seed(1234)
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = biome_name, y = TC, color = Location))+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3)+
-  geom_point(size = 3,
-             position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.5))+
+  geom_point(size = 3, position = position_dodge(width = 0.5))+
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10))+
   labs(x = "")
 ```
@@ -405,7 +300,7 @@ CEC ANOVA
 
 ```{r}
 
-lm((CEC) ~ Location * biome_name, data = data_wide) %>% car::Anova()
+lm((CEC) ~ Location * biome_name, data = bgc_data) %>% car::Anova()
 
 ```
 
@@ -413,7 +308,7 @@ plot CEC by depth
 
 ```{r}
 
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = Location, y = CEC, color = Location))+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3, outlier.colour = NA)+
   geom_jitter(size = 3, width = 0.3)+
@@ -424,13 +319,10 @@ data_wide %>%
 plot CEC by biome
 
 ```{r, fig.height=5, fig.width=9}
-set.seed(1234)
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = biome_name, y = CEC, color = Location))+
-  #geom_jitter(size = 3, width = 0.2)+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3)+
-  geom_point(size = 3,
-             position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.5))+
+  geom_point(size = 3, position = position_dodge(width = 0.5))+
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10))+
   labs(x = "")
 ```
@@ -442,7 +334,7 @@ Clay ANOVA
 
 ```{r}
 
-lm((Clay) ~ Location * biome_name, data = data_wide) %>% car::Anova()
+lm((Clay) ~ Location * biome_name, data = bgc_data) %>% car::Anova()
 
 ```
 
@@ -450,7 +342,7 @@ plot Clay by depth
 
 ```{r}
 
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = Location, y = Clay, color = Location))+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3, outlier.colour = NA)+
   geom_jitter(size = 3, width = 0.3)+
@@ -461,12 +353,10 @@ data_wide %>%
 plot Clay by biome
 
 ```{r, fig.height=5, fig.width=9}
-set.seed(1234)
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = biome_name, y = Clay, color = Location))+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3)+
-  geom_point(size = 3,
-             position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.5))+
+  geom_point(size = 3, position = position_dodge(width = 0.5))+
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10))+
   labs(x = "")
 ```
@@ -479,7 +369,7 @@ WEOC ANOVA
 
 ```{r}
 
-lm((WEOC) ~ Location * biome_name, data = data_wide) %>% car::Anova()
+lm((WEOC) ~ Location * biome_name, data = bgc_data) %>% car::Anova()
 
 ```
 
@@ -487,7 +377,7 @@ plot WEOC by depth
 
 ```{r}
 
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = Location, y = WEOC, color = Location))+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3, outlier.colour = NA)+
   geom_jitter(size = 3, width = 0.3)+
@@ -498,12 +388,10 @@ data_wide %>%
 plot WEOC by biome
 
 ```{r, fig.height=5, fig.width=9}
-set.seed(1234)
-data_wide %>% 
+bgc_data %>% 
   ggplot(aes(x = biome_name, y = WEOC, color = Location))+
   geom_boxplot(position = position_dodge(width = 0.5), width = 0.3)+
-  geom_point(size = 3,
-             position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.5))+
+  geom_point(size = 3, position = position_dodge(width = 0.5))+
   scale_x_discrete(labels = function(x) str_wrap(x, width = 10))+
   labs(x = "")
 ```
@@ -513,73 +401,98 @@ data_wide %>%
 
 ## MAPS
 
-This section has code to plot variables in a spatial manner on maps.  
-The easiest way to do this is to run the custom `make_map` function first, which will pre-load the map and other parameters.  
-You then select the variable you want to plot below.
+The `{ggplot2}` package has functionality to easily plot maps (without downloading any other files or packages!).
 
-```{r map_function}
-make_map = function(bgc_wide, VAR, TITLE = "", LEGEND = VAR){
-  
-  ## Set CRS
-  common_crs <- 4326
-  
-  ## Set map size and point size
-  point_size <- 2
-  map_width = 9
-  map_height = 6
-  
-  # Set up map layers for plotting
-  
-  ## Make US states map cropped to contiguous region
-  us <- read_sf("Biogeochem/cb_2018_us_state_5m/cb_2018_us_state_5m.shp") %>% 
-    st_transform(., crs = common_crs) 
-  
-  us_bbox <- c(xmin = -125, xmax = -60, ymin = 20, ymax = 50)
-  region <- st_crop(us, y = us_bbox)
-  
-  # make a dataset merging metadata with site lat-longs
-  df_map <- 
-    bgc_wide %>% 
-    filter(!is.na(Lat) & !is.na(Long)) %>% 
-    st_as_sf(., coords = c("Long", "Lat"), crs = common_crs)
-  
-  # Make the base map with all sites
-  ## base_plot <- 
-  ggplot() + 
-    geom_sf(data = region, fill = "white", color = "grey70") + 
-    geom_sf(data = df_map, aes_string(fill = VAR), size = 7, shape = 21, color = "black", stroke = 1) + 
-    labs(title = TITLE,
-         fill = LEGEND)+
-    ggthemes::theme_map() + 
-    theme(legend.background = element_rect(fill = alpha("white", 0.0)), 
-          legend.key = element_rect(fill = "transparent"), 
-          legend.key.size = unit(1, "cm"),
-          legend.text = element_text(size = 12),
-          legend.title = element_text(size = 12, face = "bold", vjust = 0.7),
-          legend.position = "bottom",
-          plot.title = element_text(size = 14, face = "bold"),
-          plot.background = element_rect(color = "black", fill = NA, linewidth = 1)) + 
-#    scale_color_viridis_c(option = "plasma") +
-    scale_fill_gradientn(colors = soilpalettes::soil_palette("redox2", 5))
-  
-}
+We will plot our data over a map of the USA.  
+To do so, first load the `states_map` file, which contains the data for the state outlines.  
+Then, plot the state boundaries using the `geom_polygon` function.
+
+```{r}
+states_map <- ggplot2::map_data("state")
+
+ggplot(states_map, aes(long, lat, group = group))+
+  geom_polygon(color = "grey", fill = NA)
+```
+
+Now, to plot our data over this map.  
+We add the `geom_point` layer over the base polygon layer of the states.
+
+```{r}
+ggplot(states_map, aes(long, lat, group = group))+
+  geom_polygon(color = "grey", fill = NA)+
+  geom_point(data = bgc_data, 
+             aes(x = Long, y = Lat, 
+                 fill = TC, group = 1), 
+             size = 6, shape = 21, color = "black")
 ```
 
 
-Now, make the maps
+The default `{ggplot2}` color palette may be difficult to interpret.  
+As an alternative, we use the `{soilpalettes}` package.  
 
-```{r maps}
+```{r, fig.height=7, fig.width=11}
+ggplot(states_map, aes(long, lat, group = group))+
+  geom_polygon(color = "grey", fill = NA)+
+  geom_point(data = bgc_data %>% filter(Location == "TOP"), 
+             aes(x = Long, y = Lat, color = TC, group = 1), 
+             size = 6)+
+  scale_color_gradientn(colors = soil_palette("redox2", 5))+
+  labs(color = "TC, %")+
+  theme_void(base_size = 16)+
+  theme(legend.position = "bottom")
+```
 
-make_map(data_wide %>% filter(Location == "TOP"), VAR = "TC", LEGEND = "TC (%)")
-make_map(data_wide %>% filter(Location == "TOP"), VAR = "WEOC", LEGEND = "WEOC (mg/g)")
-make_map(data_wide %>% filter(Location == "TOP"), VAR = "MBC", LEGEND = "MBC (mg/g)")
+```{r, fig.height=7, fig.width=11}
+ggplot(states_map, aes(long, lat, group = group))+
+  geom_polygon(color = "grey", fill = NA)+
+  geom_point(data = bgc_data %>% filter(Location == "TOP"), 
+             aes(x = Long, y = Lat, color = WEOC, group = 1), 
+             size = 6)+
+  scale_color_gradientn(colors = soil_palette("redox2", 5))+
+  labs(color = "WEOC, mg/g")+
+  theme_void(base_size = 16)+
+  theme(legend.position = "bottom")
+```
 
-make_map(data_wide %>% filter(Location == "TOP"), VAR = "TN", LEGEND = "TN (%)")
 
-make_map(data_wide %>% filter(Location == "BTM"), VAR = "CEC", LEGEND = "CEC (meq/100g)")
+```{r, fig.height=7, fig.width=11}
+ggplot(states_map, aes(long, lat, group = group))+
+  geom_polygon(color = "grey", fill = NA)+
+  geom_point(data = bgc_data %>% filter(Location == "TOP"), 
+             aes(x = Long, y = Lat, color = CEC, group = 1), 
+             size = 6)+
+  scale_color_gradientn(colors = soil_palette("redox2", 5))+
+  labs(color = "CEC, meq/100g")+
+  theme_void(base_size = 16)+
+  theme(legend.position = "bottom")
+```
 
-make_map(data_wide %>% filter(Location == "TOP"), VAR = "Clay", LEGEND = "Clay (%)")
 
+```{r, fig.height=7, fig.width=11}
+ggplot(states_map, aes(long, lat, group = group))+
+  geom_polygon(color = "grey", fill = NA)+
+  geom_point(data = bgc_data %>% filter(Location == "TOP"), 
+             aes(x = Long, y = Lat, color = Clay, group = 1), 
+             size = 6)+
+  scale_color_gradientn(colors = soil_palette("redox2", 5))+
+  labs(color = "Clay, %")+
+  theme_void(base_size = 16)+
+  theme(legend.position = "bottom")
+```
+
+Another map example, showing the different biomes
+
+```{r, fig.height=7, fig.width=17}
+ggplot(states_map, aes(long, lat, group = group))+
+  geom_polygon(color = "grey", fill = NA)+
+  geom_point(data = bgc_data, 
+             aes(x = Long, y = Lat, 
+                 color = biome_name, group = 1), 
+             size = 6)+
+  scale_color_manual(values = soil_palette("redox2", 5))+
+  theme_void(base_size = 16)+
+  labs(fill = "")
+  
 ```
 
 
@@ -587,30 +500,54 @@ make_map(data_wide %>% filter(Location == "TOP"), VAR = "Clay", LEGEND = "Clay (
 
 ## TEXTURE
 
-```{r}
-plot_texture = function(texture_processed){
+We plot % sand-silt-clay on a texture triangle (ternary plot) to determine the soil texture. We use the `ggtern` package for this. 
 
-  # plot the soil texture triangle
-  library(ggtern) 
-  data(USDA)
-  
-  gg_texture = 
-    ggtern(data = data_wide,
-           aes(x = Sand, y = Clay, z = Silt)) +
+You first plot the base ternary triangle. You will need to load the `USDA` dataset from `ggtern`.
+
+```{r}
+data(USDA)
+
+ texture_base = 
+  ggtern() +
     geom_polygon(data = USDA, 
                  aes(x = Sand, y = Clay, z = Silt, group = Label),
                  fill = NA, size = 0.3, alpha = 0.5, color = "grey30")+
-    geom_point(aes(fill = biome_name),
-               size = 4, color = "black", stroke = 1, shape = 21)+
-#    facet_wrap(~Location)+
     theme_bw()+
     theme_showarrows()+
     theme_hidetitles()+
-    theme_clockwise() +
-      scale_fill_manual(values = soil_palette("redox2", 5))+
-      scale_shape_manual(values = c(21, 24))+
-    labs(fill = "")
-  
+    theme_clockwise()
+
+texture_base
+```
+
+then overlay your data points
+
+```{r}
+
+texture_base +
+  geom_point(data = bgc_data,
+             aes(x = Sand, y = Clay, z = Silt),
+             size = 4, color = "black")
+
+```
+
+Now, color the data points by CEC
+```{r}
+texture_cec = 
+  texture_base +
+  geom_point(data = bgc_data %>% filter(!is.na(CEC)),
+             aes(x = Sand, y = Clay, z = Silt, color = CEC),
+             size = 4, )+
+  scale_color_gradientn(colors = soil_palette("redox2", 5))+
+  labs(fill = "CEC (meq/100g)")
+
+
+```
+
+Now, we need to add the texture labels.  
+Create a new dataframe from the `USDA` dataset (included with `ggtern`). Then add that to the previous plot.
+
+```{r, fig.height=8, fig.width=8}
   USDA_text <- 
     USDA  %>% 
     group_by(Label) %>%
@@ -618,10 +555,10 @@ plot_texture = function(texture_processed){
     ungroup()
   
   #textures_names<-
-  gg_texture +
+  texture_cec +
     geom_text(data = USDA_text,
               aes(x = Sand, y = Clay, z = Silt, label = Label),
               size = 4, color = "black")
-}
+  
 ```
 
