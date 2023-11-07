@@ -18,7 +18,7 @@ The App can be accessed [here](https://shinyproxy.emsl.pnnl.gov/app/1000soils).
 Data for this tutorial can be found in the `Biogeochem/data` subdirectory of this repository. 
 Follow the links below and click the “download raw data” button.
 
-![image](https://github.com/EMSL-MONet/CommSciMtg_Nov23/assets/50244730/5fecb9fe-ed78-445c-984c-d69372322831)
+![image](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/screenshot_download_file.png)
 
 
 file links:
@@ -28,6 +28,10 @@ file links:
   physics](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_data.csv)
 - [site
   metadata](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/data/bgc_metadata.csv)
+
+---
+### Session 3 Tutorial
+The _biogeochemistry_ tutorial for Day 1 contains graphs and maps exploring the dataset. Users may access the code (link [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session3_data_tutorial_kfp.html)). Graphs were created using [R](https://cran.r-project.org/) and [RStudio](https://posit.co/downloads/). Download the [Session3 Biogeochemistry tutorial](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session3_data_tutorial_kfp.html) to your computer. This is an html file. Double-click the file to open it in your browser and load the tutorial, and follow the instructions in there.
 
 ---
 
