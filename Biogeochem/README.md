@@ -31,7 +31,7 @@ file links:
 
 ---
 ### Session 3 Tutorial
-The _biogeochemistry_ tutorial for Day 1 contains graphs and maps exploring the dataset. Users may access the code (link [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session3_data_tutorial_kfp.html)). Graphs were created using [R](https://cran.r-project.org/) and [RStudio](https://posit.co/downloads/). Download the [Session3 Biogeochemistry tutorial](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session3_data_tutorial_kfp.html) to your computer. This is an html file. Double-click the file to open it in your browser and load the tutorial, and follow the instructions in there.
+The _biogeochemistry_ tutorial for Day 1 contains graphs and maps exploring the dataset. Graphs were created using [R](https://cran.r-project.org/) and [RStudio](https://posit.co/downloads/). Users may access the code [here](https://github.com/EMSL-MONet/CommSciMtg_Nov23/blob/main/Biogeochem/session3_data_tutorial_kfp.html) - download the file and double-click to open it in your browser, then follow the instructions in the document.
 
 ---
 
