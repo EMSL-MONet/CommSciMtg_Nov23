@@ -1,4 +1,4 @@
-﻿column,abbreviated,analysis_type,Variable.Name,Unit
+﻿analysis_full,analysis,analysis_type,Variable.Name,Unit
 Sample_ID,Sample_ID,,"Identifier of soil core, 1000S_XXXX",
 Location,Location,,Top or bottom layer of each soil core,
 mean_GWC,GWC,GWC,Mean of gravimetric weight content (moisture content),g water per g dry soil
