@@ -51,10 +51,12 @@ jupyter notebook: https://jupyter.org/install  <br>
 3. Open your command prompt and install the necessary libraries we will be using. For each library, type the following into the command prompt:<br>
    pip install pandas <br>
    pip install pandas <br>
-   pip install numpy as np<br>
+   pip install numpy<br>
    pip install matplotlib <br>
    pip install scipy <br>
-   pip install tqdm 
+   pip install tqdm  
+
+You may need to run 'pip3' instead of 'pip' depending on how your Python install is set up.    
 
 4. Run the test file script "HelloWorld_test.ipynb". This will import functions you will need during the hands on session.  <br>
 If you have any trouble or do not see a “Congratulations, you are ready for the hands on session on Nov 8”, please
