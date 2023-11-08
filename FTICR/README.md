@@ -50,10 +50,10 @@ jupyter notebook: https://jupyter.org/install  <br>
 
 3. Open your command prompt and install the necessary libraries we will be using. For each library, type the following into the command prompt:<br>
    pip install pandas <br>
-   pip install pandas <br>
    pip install numpy<br>
    pip install matplotlib <br>
    pip install scipy <br>
+   pip install seaborn <br>
    pip install tqdm  
 
 You may need to run 'pip3' instead of 'pip' depending on how your Python install is set up.    
